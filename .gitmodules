@@ -3,4 +3,4 @@
 	url = https://framagit.org/MagicSowap/42-libft.git
 [submodule "libft"]
 	path = libft
-	url = git@framagit.org:MagicSowap/42-libft.git
+	url = https://framagit.org/MagicSowap/42-libft.git
