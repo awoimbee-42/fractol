@@ -17,16 +17,16 @@
 **	find if point is part of bourgeon principal
 */
 
-static int	is_mandelbrot(t_pixel px)
+static int	is_mandelbrot(t_complex c)
 {
 	double			tmp;
 	double			p;
 
-	p = sqrt(pow(px.re_x-0.25, 2) + pow(px.im_y, 2));
+	p = sqrt(pow(c.re-0.25, 2) + pow(c.im, 2));
 	tmp = p - (2. * pow(p, 2.)) + 0.25;
-	if (px.re_x < tmp)
+	if (c.re < tmp)
 		return (1);
-	tmp = pow(px.re_x + 1., 2.) + pow(px.im_y, 2.);
+	tmp = pow(c.re + 1., 2.) + pow(c.im, 2.);
 	if (tmp < 1./16.)
 		return (1);
 	return (0);
@@ -35,6 +35,11 @@ static int	is_mandelbrot(t_pixel px)
 static void	actually_render(t_data *data)
 {
 	t_pixel		px;
+	t_complex	c;
+	t_complex	z;
+	double		z_re_square;
+	double		z_im_square;
+	int			iter;
 
 	px.im_y = -1;
 	while (++px.im_y < data->win_height)
@@ -42,8 +47,28 @@ static void	actually_render(t_data *data)
 		px.re_x = -1;
 		while (++px.re_x < data->win_width)
 		{
-			if (is_mandelbrot(px))
+			c.im = (px.im_y - (data->win_width / 2));
+			c.re = (px.re_x - (data->win_height / 2));
+			if (is_mandelbrot(c))
 				data->mlx->img.data[(px.im_y * data->win_width + px.re_x)] = 0xFFFFFF;
+			else
+			{
+				iter = 0;
+				z.re = 0;
+				z.im = 0;
+				z_re_square = z.re * z.re;
+				z_im_square = z.im * z.im;
+				while ((z_re_square + z_im_square) <= 4. && iter < 500)
+				{
+					++iter;
+					z.im = pow(z.re + z.im, 2.) - z_re_square - z_im_square;
+					z.im += c.im;
+					z.re = z_re_square - z_im_square + c.re;
+					z_re_square = pow(z.re, 2.);
+					z_im_square = pow(z.im, 2.);
+				}
+				data->mlx->img.data[(px.im_y * data->win_width + px.re_x)] = ((z_re_square + z_im_square) / 4);
+			}
 		}
 	}
 	fprintf(stderr, "rendered ?\n");

@@ -46,11 +46,11 @@ mlx :
 	make -C $(LIB_X_FD) all
 
 libft :
-	make -C libs/libft/ all
+	make -C libft/ all
 
 clean :
 	make -C $(LIB_X_FD) clean
-	make -C libs/libft/ clean
+	make -C libft/ clean
 
 fclean : clean
 	rm -rf $(NAME)

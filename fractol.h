@@ -69,6 +69,11 @@ typedef struct	s_pixel
 	int			im_y;
 }				t_pixel;
 
+typedef struct	s_complex
+{
+	double		re;
+	double		im;
+}				t_complex;
 
 typedef struct	s_data
 {
