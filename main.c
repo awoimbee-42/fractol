@@ -12,6 +12,10 @@
 
 #include "fractol.h"
 
+//https://fr.wikipedia.org/wiki/Ensemble_de_Mandelbrot#Barri%C3%A8re_du_module_%C3%A9gal_%C3%A0_2
+//https://www.geeksforgeeks.org/fractals-in-cc/
+
+
 void	usage(void)
 {
 	msg_exit("Usage : ./fractol sale pute\n\
