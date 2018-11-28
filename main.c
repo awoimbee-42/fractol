@@ -30,8 +30,12 @@ int		keypress(int keycode, void *param)
 	t_data	*data;
 
 	data = (t_data*)param;
-	keycode == K_LEW ? data->zoom *= 1.25 : 0;
-	keycode == K_LES ? data->zoom /= 1.25 : 0;
+	keycode == K_LEW ? data->zoom /= 1.25 : 0;
+	keycode == K_LES ? data->zoom *= 1.25 : 0;
+	keycode == K_LFT ? data->pos_x -= data->zoom : 0;
+	keycode == K_RGT ? data->pos_x += data->zoom : 0;
+	keycode == K_AUP ? data->pos_y -= data->zoom : 0;
+	keycode == K_DWN ? data->pos_y += data->zoom : 0;
 	keycode == K_ESC ? exit(0) : 0;
 	render(data->mlx, data);
 	return (1);
@@ -46,9 +50,10 @@ int		main(int argc, char **argv)
 	data.win_height = 1000;
 	data.win_width = 1000;
 	data.mlx = &mlx;
-	data.zoom = 0;
-	data.rgb = 0xFF0000;
-	data.precisn = 8.;
+	data.zoom = 1.;
+	data.pos_x = 0;
+	data.pos_y = 0;
+
 
     chaos((mlx.win = mlx_new_window(mlx.ptr,
 		data.win_width, data.win_height, "Give good grade plz")));

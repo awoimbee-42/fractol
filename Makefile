@@ -33,7 +33,7 @@ SRC	=	*.c
 
 INCS	=	./ $(LIB_X_FD)
 
-CFLAGS	=	-g3 -O0 #-Wall -Wextra -Werror
+CFLAGS	=	-O3#-g3 -O0 #-Wall -Wextra -Werror
 
 all : $(NAME)
 

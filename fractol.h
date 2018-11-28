@@ -75,13 +75,19 @@ typedef struct	s_complex
 	double		im;
 }				t_complex;
 
+typedef struct	s_vec3
+{
+	double		x;
+	double		y;
+	double		z;
+}				t_vec3;
+
 typedef struct	s_data
 {
 	t_mlx		*mlx;
-	double		precisn;
 	double		zoom;
-	int			rgb;
-	double		zh;
+	double		pos_x;
+	double		pos_y;
 	int			win_height;
 	int			win_width;
 }				t_data;
