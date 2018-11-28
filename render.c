@@ -40,16 +40,6 @@ double			squared_modulus(t_complex z)
 	return (z.re * z.re + z.im * z.im);
 }
 
-t_complex		square_c(t_complex z)
-{
-	float		tmp;
-
-	tmp = z.re;
-	z.re = (z.re * z.re) - (z.im * z.im);
-	z.im = 2 * tmp * z.im;
-	return (z);
-}
-
 t_complex		sum_c(t_complex z, t_complex add)
 {
 	z.re += add.re;
@@ -61,8 +51,8 @@ t_complex		mult_c(t_complex z, t_complex mult)
 {
 	t_complex	result;
 
-	result.re = z.re * mult.re + z.im * mult.im;
-	result.im = z.re * mult.im + z.im * mult.re;
+	result.re = z.re * mult.re - z.im * mult.im;
+	result.im = z.im * mult.re + z.re * mult.im;
 	return (result);
 }
 
@@ -93,15 +83,15 @@ static void	actually_render(t_data *data)
 			c.im = (px.im_y - (data->win_width / 2.)) / data->win_width * 5. * data->zoom + data->pos_y;
 			c.re = (px.re_x - (data->win_height / 2.)) / data->win_height * 5. * data->zoom + data->pos_x;
 			z = c;
-			derr_inpc.re = 1;
-			derr_inpc.im = 0;
+			derr_inpc.re = 1.;
+			derr_inpc.im = 0.;
 			iter = 0;
-			color = 0x000000;  //not enough iterations
+			color = 0xFFFFFF;  //not enough iterations
 			if (1 == 1 || !is_mandelbrot(c))
 			{
 				while (++iter < 500)
 				{
-					if (squared_modulus(derr_inpc) < 0.000001)
+					if (squared_modulus(derr_inpc) < 0.001)
 					{
 						color = 0xFFFF00; //inside color
 						break ;
@@ -109,56 +99,13 @@ static void	actually_render(t_data *data)
 					if (squared_modulus(z) > 4 && (color = get_col(iter))) // outside color
 						break ;
 					derr_inpc = mult_c(sum_c(derr_inpc, derr_inpc), z);
-					z = sum_c(square_c(z), c);
+					z = sum_c(mult_c(z, z), c);
 				}
 			}
 			data->mlx->img.data[(px.im_y * data->win_width + px.re_x)] = color;
 		}
 	}
-	fprintf(stderr, "rendered ?\n");
 }
-
-//weird fractal
-// static void	actually_render(t_data *data)
-// {
-// 	t_pixel		px;
-// 	t_complex	c;
-// 	t_complex	z;
-// 	double		z_re_square;
-// 	double		z_im_square;
-// 	int			iter;
-
-// 	px.im_y = -1;
-// 	while (++px.im_y < data->win_height)
-// 	{
-// 		px.re_x = -1;
-// 		while (++px.re_x < data->win_width)
-// 		{
-// 			c.im = (px.im_y - (data->win_width / 2));
-// 			c.re = (px.re_x - (data->win_height / 2));
-// 			if (is_mandelbrot(c) && 1 == 0)
-// 				data->mlx->img.data[(px.im_y * data->win_width + px.re_x)] = 0xFFFFFF;
-// 			else
-// 			{
-// 				iter = 0;
-// 				z = c;
-// 				z_re_square = z.re * z.re;
-// 				z_im_square = z.im * z.im;
-// 				while ((z_re_square + z_im_square) <= 4. && iter < 500)
-// 				{
-// 					++iter;
-// 					z.im = pow(z.re + z.im, 2.) - z_re_square - z_im_square;
-// 					z.im += c.im;
-// 					z.re = z_re_square - z_im_square + c.re;
-// 					z_re_square = pow(z.re, 2.);
-// 					z_im_square = pow(z.im, 2.);
-// 				}
-// 				data->mlx->img.data[(px.im_y * data->win_width + px.re_x)] = ((z_re_square + z_im_square) / 4);
-// 			}
-// 		}
-// 	}
-// 	fprintf(stderr, "rendered ?\n");
-// }
 
 void		render(t_mlx *mlx, t_data *data)
 {

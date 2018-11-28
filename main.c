@@ -37,6 +37,7 @@ int		keypress(int keycode, void *param)
 	keycode == K_AUP ? data->pos_y -= data->zoom : 0;
 	keycode == K_DWN ? data->pos_y += data->zoom : 0;
 	keycode == K_ESC ? exit(0) : 0;
+	fprintf(stderr, "Key pressed : %d\n", keycode);
 	render(data->mlx, data);
 	return (1);
 }
@@ -58,7 +59,7 @@ int		main(int argc, char **argv)
     chaos((mlx.win = mlx_new_window(mlx.ptr,
 		data.win_width, data.win_height, "Give good grade plz")));
 	render(&mlx, &data);
-	mlx_hook(mlx.win, 2, 0, &keypress, &data);
+	mlx_key_hook(mlx.win, &keypress, &data);
+	//mlx_hook(mlx.win, 2, 0, &keypress, &data);
 	mlx_loop(mlx.ptr);
-
 }

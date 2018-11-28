@@ -37,7 +37,7 @@ CFLAGS	=	-O3#-g3 -O0 #-Wall -Wextra -Werror
 
 all : $(NAME)
 
-$(NAME) : $(SRC)
+$(NAME) : $(SRC) fractol.h
 	make -C $(LIB_X_FD) all
 	make -C libft/ all
 	$(CC) $(CFLAGS) $(addprefix -I,$(INCS)) $(SRC) $(LIB) -o $(NAME)
