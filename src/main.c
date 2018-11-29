@@ -48,8 +48,8 @@ int		main(int argc, char **argv)
 	t_data	data;
 
     chaos((mlx.ptr = mlx_init()));
-	data.win_height = 1000;
-	data.win_width = 1000;
+	data.win_height = 1400;
+	data.win_width = 1400;
 	data.mlx = &mlx;
 	data.zoom = 1.;
 	data.pos_x = 0;
@@ -59,7 +59,7 @@ int		main(int argc, char **argv)
     chaos((mlx.win = mlx_new_window(mlx.ptr,
 		data.win_width, data.win_height, "Give good grade plz")));
 	render(&mlx, &data);
-	mlx_key_hook(mlx.win, &keypress, &data);
-	//mlx_hook(mlx.win, 2, 0, &keypress, &data);
+	// mlx_key_hook(mlx.win, &keypress, &data);
+	mlx_hook(mlx.win, 2, 0, &keypress, &data);
 	mlx_loop(mlx.ptr);
 }

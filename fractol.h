@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <math.h>
+# include <pthread.h> // threading !
 
 # ifdef __APPLE__
 #  define K_AUP 126

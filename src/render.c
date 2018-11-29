@@ -25,11 +25,11 @@ static int	is_mandelbrot(t_complex c)
 	double			tmp;
 	double			p;
 
-	p = sqrt(pow(c.re-0.25, 2) + pow(c.im, 2));
-	tmp = p - (2. * pow(p, 2.)) + 0.25;
+	p = sqrt(((c.re-0.25) * (c.re-0.25)) + c.im * c.im);
+	tmp = p - (2. * p * p) + 0.25;
 	if (c.re < tmp)
 		return (1);
-	tmp = pow(c.re + 1., 2.) + pow(c.im, 2.);
+	tmp = (c.re + 1.) * (c.re + 1.) + c.im * c.im;
 	if (tmp < 1./16.)
 		return (1);
 	return (0);
@@ -61,8 +61,18 @@ int			get_col(int iter)
 	return ((0x0000F * iter) & 0xFFFFFF);
 }
 
+t_complex		fill_complex(float re, float im)
+{
+	t_complex	result;
+
+	result.re = re;
+	result.im = im;
+	return (result);
+}
+
 /*
-** derr_inpc  = (Pⁿ)'(c)
+**	// derr_pc = (P⁰)'(c) NO
+**	derr_inpc  = (Pⁿ)'(c)
 */
 
 static void	actually_render(t_data *data)
@@ -73,7 +83,12 @@ static void	actually_render(t_data *data)
 	int			iter;
 	int			color;
 	t_complex	derr_inpc;
+	t_complex	derr_pc;
+	t_complex	derr_enpc;
 
+	float		thickness;
+
+	thickness = 0.0001;
 	px.im_y = -1;
 	while (++px.im_y < data->win_height)
 	{
@@ -83,22 +98,24 @@ static void	actually_render(t_data *data)
 			c.im = (px.im_y - (data->win_width / 2.)) / data->win_width * 5. * data->zoom + data->pos_y;
 			c.re = (px.re_x - (data->win_height / 2.)) / data->win_height * 5. * data->zoom + data->pos_x;
 			z = c;
-			derr_inpc.re = 1.;
-			derr_inpc.im = 0.;
+
+			derr_pc = fill_complex((1./data->win_width)* thickness, 0.);
+			derr_inpc = derr_pc;
+			derr_enpc = fill_complex(1., 0.);
 			iter = 0;
 			color = 0xFFFFFF;  //not enough iterations
-			if (1 == 1 || !is_mandelbrot(c))
+			if (!is_mandelbrot(c))
 			{
 				while (++iter < 500)
 				{
-					if (squared_modulus(derr_inpc) < 0.001)
-					{
-						color = 0xFFFF00; //inside color
+					if (squared_modulus(derr_enpc) < 0.01 && (color = 0xFF0000)) // inside colour
 						break ;
-					}
-					if (squared_modulus(z) > 4 && (color = get_col(iter))) // outside color
+					if (squared_modulus(z) < squared_modulus(derr_inpc) && (color = 0xFFFF00))  //contour
 						break ;
-					derr_inpc = mult_c(sum_c(derr_inpc, derr_inpc), z);
+					if (squared_modulus(z) > 100*100 && (color = get_col(iter))) // outside color
+						break ;
+					derr_inpc = sum_c(mult_c(sum_c(derr_inpc, derr_inpc), z), derr_pc);
+					derr_enpc = mult_c(sum_c(derr_enpc, derr_enpc), z);
 					z = sum_c(mult_c(z, z), c);
 				}
 			}
