@@ -22,7 +22,8 @@ OBJ_PATH =	obj
 SRC_NAME =	main.c			\
 			render.c		\
 			useful_funcs.c	\
-			complex_op.c
+			complex_op.c	\
+			mandelbrot.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

@@ -54,6 +54,7 @@ int		main(int argc, char **argv)
 	data.zoom = 1.;
 	data.pos_x = 0;
 	data.pos_y = 0;
+	data.thickness = 0.001;
 
 
     chaos((mlx.win = mlx_new_window(mlx.ptr,

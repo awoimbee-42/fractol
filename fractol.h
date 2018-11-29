@@ -89,12 +89,14 @@ typedef struct	s_data
 	double		zoom;
 	double		pos_x;
 	double		pos_y;
+	double		thickness;
 	int			win_height;
 	int			win_width;
 }				t_data;
 
 void		msg_exit(char *msg, void *data);
 void		render(t_mlx *mlx, t_data *data);
+void		render_mandelbrot(t_data *data);
 void		chaos(void *fate);
 
 /*
