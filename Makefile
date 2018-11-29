@@ -14,14 +14,15 @@ NAME	=	fractol
 
 CC = gcc
 
-CFLAGS	=	-O3#-g3 -O0 #-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra #-Wall -Wextra -Werror
 
 SRC_PATH =	src
 OBJ_PATH =	obj
 
 SRC_NAME =	main.c			\
 			render.c		\
-			useful_funcs.c
+			useful_funcs.c	\
+			complex_op.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
@@ -54,7 +55,7 @@ $(NAME) : $(OBJ)
 	$(CC) $(LDFLAGS) $(LDLIBS) $^ -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	@echo "\033[0;31mMaking $@...\033[0m"
+	@echo "\033[0;32mMaking $@ with \"$(CFLAGS) $(CPPFLAGS)\"...\033[0m"
 	@mkdir -p $(OBJ_PATH) 2> /dev/null
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 

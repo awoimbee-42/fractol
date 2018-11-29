@@ -97,4 +97,13 @@ void		msg_exit(char *msg, void *data);
 void		render(t_mlx *mlx, t_data *data);
 void		chaos(void *fate);
 
+/*
+**	Operations on t_complex
+*/
+void		fill_complex(t_complex *c, float re, float im);
+double		squared_modulus(t_complex *z);
+t_complex	*sum_c(t_complex *z, t_complex *add);
+t_complex	*mult_c(t_complex *z, t_complex *mult);
+t_complex	*square_c(t_complex *z);
+
 #endif

@@ -18,42 +18,19 @@
 **	Function to find if we are inside the mandelbrot bulb
 **	Using this speeds up the algo a LOT because without this it needs to :
 **	compute until MAX_ITER
+**	Thanks, wikipedia !
 */
 
-static int	is_mandelbrot(t_complex c)
+static int	is_mandelbrot(t_complex *c)
 {
-	double			tmp;
-	double			p;
+	double			q;
 
-	p = sqrt(((c.re-0.25) * (c.re-0.25)) + c.im * c.im);
-	tmp = p - (2. * p * p) + 0.25;
-	if (c.re < tmp)
+	q = ((c->re-0.25) * (c->re-0.25) + c->im * c->im);
+	if (q * (q + (c->re - 0.25)) < 0.25 * (c->im * c->im))
 		return (1);
-	tmp = (c.re + 1.) * (c.re + 1.) + c.im * c.im;
-	if (tmp < 1./16.)
+	if (((c->re + 1.) * (c->re + 1.) + c->im * c->im) < 1./16.)
 		return (1);
 	return (0);
-}
-
-double			squared_modulus(t_complex z)
-{
-	return (z.re * z.re + z.im * z.im);
-}
-
-t_complex		sum_c(t_complex z, t_complex add)
-{
-	z.re += add.re;
-	z.im += add.im;
-	return (z);
-}
-
-t_complex		mult_c(t_complex z, t_complex mult)
-{
-	t_complex	result;
-
-	result.re = z.re * mult.re - z.im * mult.im;
-	result.im = z.im * mult.re + z.re * mult.im;
-	return (result);
 }
 
 int			get_col(int iter)
@@ -61,17 +38,8 @@ int			get_col(int iter)
 	return ((0x0000F * iter) & 0xFFFFFF);
 }
 
-t_complex		fill_complex(float re, float im)
-{
-	t_complex	result;
-
-	result.re = re;
-	result.im = im;
-	return (result);
-}
-
 /*
-**	// derr_pc = (P⁰)'(c) NO
+**	derr_pc = (P⁰)'(c)
 **	derr_inpc  = (Pⁿ)'(c)
 */
 
@@ -88,7 +56,7 @@ static void	actually_render(t_data *data)
 
 	float		thickness;
 
-	thickness = 0.0001;
+	thickness = 0.00001;
 	px.im_y = -1;
 	while (++px.im_y < data->win_height)
 	{
@@ -99,24 +67,24 @@ static void	actually_render(t_data *data)
 			c.re = (px.re_x - (data->win_height / 2.)) / data->win_height * 5. * data->zoom + data->pos_x;
 			z = c;
 
-			derr_pc = fill_complex((1./data->win_width)* thickness, 0.);
+			fill_complex(&derr_pc, (1./data->win_width) * thickness, 0.);
 			derr_inpc = derr_pc;
-			derr_enpc = fill_complex(1., 0.);
+			fill_complex(&derr_enpc, 1., 0.);
 			iter = 0;
 			color = 0xFFFFFF;  //not enough iterations
-			if (!is_mandelbrot(c))
+			if (!is_mandelbrot(&c))
 			{
-				while (++iter < 500)
+				while (++iter < 100000)
 				{
-					if (squared_modulus(derr_enpc) < 0.01 && (color = 0xFF0000)) // inside colour
+					if (squared_modulus(&derr_enpc) < 0.01 && (color = 0xFF0000)) // inside colour
 						break ;
-					if (squared_modulus(z) < squared_modulus(derr_inpc) && (color = 0xFFFF00))  //contour
+					if (squared_modulus(&z) < squared_modulus(&derr_inpc) && (color = 0xFFFF00))  //contour
 						break ;
-					if (squared_modulus(z) > 100*100 && (color = get_col(iter))) // outside color
+					if (squared_modulus(&z) > 100*100 && (color = get_col(iter))) // outside color
 						break ;
-					derr_inpc = sum_c(mult_c(sum_c(derr_inpc, derr_inpc), z), derr_pc);
-					derr_enpc = mult_c(sum_c(derr_enpc, derr_enpc), z);
-					z = sum_c(mult_c(z, z), c);
+					(void)sum_c(mult_c(sum_c(&derr_inpc, &derr_inpc), &z), &derr_pc);
+					(void)mult_c(sum_c(&derr_enpc, &derr_enpc), &z);
+					(void)sum_c(square_c(&z), &c);
 				}
 			}
 			data->mlx->img.data[(px.im_y * data->win_width + px.re_x)] = color;

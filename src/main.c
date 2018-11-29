@@ -48,8 +48,8 @@ int		main(int argc, char **argv)
 	t_data	data;
 
     chaos((mlx.ptr = mlx_init()));
-	data.win_height = 1400;
-	data.win_width = 1400;
+	data.win_height = 1000;
+	data.win_width = 1000;
 	data.mlx = &mlx;
 	data.zoom = 1.;
 	data.pos_x = 0;
