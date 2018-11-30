@@ -33,6 +33,9 @@
 #  define K_LES 1
 #  define K_LEA 0
 #  define K_LED 2
+#  define K_PLS 69
+#  define K_MNS 78
+#  define K_LER 15
 #  define K_ESC 53
 # elif __linux__
 #  define K_AUP 65362
@@ -76,34 +79,37 @@ typedef struct	s_complex
 	double		im;
 }				t_complex;
 
-typedef struct	s_vec3
+typedef struct	s_res
 {
-	double		x;
-	double		y;
-	double		z;
-}				t_vec3;
+	int			w;
+	int			h;
+}				t_res;
 
 typedef struct	s_data
 {
 	t_mlx		*mlx;
+	int			fract;
 	double		zoom;
-	double		pos_x;
-	double		pos_y;
+	t_complex	pos;
+	t_complex	mouse;
 	double		thickness;
-	int			win_height;
-	int			win_width;
+	t_res		res;
 }				t_data;
 
+void		chaos(void *fate);
 void		msg_exit(char *msg, void *data);
 void		render(t_mlx *mlx, t_data *data);
-void		render_mandelbrot(t_data *data);
-void		chaos(void *fate);
+void		render_offscreen(t_data *data);
+
+void		render_fract(t_data *data);
+int			get_col(int iter);
+void		export_bmp(t_data *data);
 
 /*
 **	Operations on t_complex
 */
 void		fill_complex(t_complex *c, float re, float im);
-double		squared_modulus(t_complex *z);
+float		squared_modulus(t_complex *z);
 t_complex	*sum_c(t_complex *z, t_complex *add);
 t_complex	*mult_c(t_complex *z, t_complex *mult);
 t_complex	*square_c(t_complex *z);

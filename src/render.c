@@ -3,33 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/26 23:26:53 by marvin            #+#    #+#             */
-/*   Updated: 2018/11/26 23:26:53 by marvin           ###   ########.fr       */
+/*   Created: 2018/11/26 18:35:10 by awoimbee          #+#    #+#             */
+/*   Updated: 2018/11/30 18:45:52 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <time.h> //  !!!!!!!
 
 int			get_col(int iter)
 {
 	return ((0x0000F * iter) & 0xFFFFFF);
 }
 
-
 void		render(t_mlx *mlx, t_data *data)
 {
-	mlx->img.ptr = mlx_new_image(mlx->ptr, data->win_width, data->win_height);
+	mlx->img.ptr = mlx_new_image(mlx->ptr, data->res.w, data->res.h);
 	mlx->img.data = (int *)mlx_get_data_addr(mlx->img.ptr, &mlx->img.bpp,
 											&mlx->img.line_s, &mlx->img.endian);
-	clock_t begin = clock();
-	render_mandelbrot(data);
-	clock_t end = clock();
-	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	fprintf(stderr, "time spend calculating frame : %f\n", time_spent);
+	render_fract(data);
 	mlx_clear_window(mlx->ptr, mlx->win);
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img.ptr, 0, 0);
 	mlx_destroy_image(mlx->ptr, mlx->img.ptr);
+}
+
+void		render_offscreen(t_data *data)
+{
+	t_res	tmp_res;
+
+	write(1, "Making high quality render...\n", 30);
+	tmp_res = data->res;
+	data->res.h = 10000;
+	data->res.w = 10000;
+	if (!(data->mlx->img.data = malloc((data->res.w * data->res.h) * 4)))
+		msg_exit("Not enought ram!", 0);
+	render_fract(data);
+	export_bmp(data);
+	free(data->mlx->img.data);
+	data->res = tmp_res;
+	write(1, "Render done, check img.bmp!\n", 28);
 }

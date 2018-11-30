@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:42:31 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/11/29 18:02:06 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/11/30 18:34:55 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void			fill_complex(t_complex *c, float re, float im)
 	c->im = im;
 }
 
-double			squared_modulus(t_complex *z)
+float			squared_modulus(t_complex *z)
 {
 	return (z->re * z->re + z->im * z->im);
 }

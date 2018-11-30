@@ -23,7 +23,8 @@ SRC_NAME =	main.c			\
 			render.c		\
 			useful_funcs.c	\
 			complex_op.c	\
-			mandelbrot.c
+			mandelbrot.c	\
+			save_bitmap.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
@@ -74,3 +75,12 @@ fclean : clean
 	rm -f $(NAME)
 
 re : fclean all
+
+sfclean :
+	@echo "\033[0;31mCleaning $(NAME)...\033[0m"
+	rm -f $(NAME)
+	@echo "\033[0;31mCleaning objects...\033[0m"
+	rm -f $(OBJ)
+	@rmdir $(OBJ_PATH) 2> /dev/null || true
+
+sre: sfclean $(NAME)
