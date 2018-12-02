@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   draw_mandel_julia.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:50:12 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/11/30 19:27:22 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/02 20:11:54 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static void	draw_px(t_complex z, t_complex c, t_complex derr_pc, int *imgd)
 	derr_inec.re = 1;
 	derr_inec.im = 0;
 	iter = 0;
-	col = 0xF0F0FF;
+	col = 0xFFFFFF;
 	while (++iter < 500)
 	{
 		radius = squared_modulus(&z);
-		if (squared_modulus(&derr_inec) < 0.001 && (col = get_col(iter)))
+		if (squared_modulus(&derr_inec) < 0.001 && (col = 0xFFFFFF))
 			break ;
 		if (radius < squared_modulus(&derr_inpc) && (col = 0xFFFFFF))
 			break ;
@@ -47,34 +47,56 @@ static void	draw_px(t_complex z, t_complex c, t_complex derr_pc, int *imgd)
 	*imgd = col;
 }
 
-void		render_fract(t_data *data)
+void		*draw_mandel(void *thread_data)
 {
-	t_pixel		px;
-	t_complex	c;
-	t_complex	z;
-	t_complex	derr_pc;
+	t_thrd_data	*tdata;
 	int			px_id;
+	t_pixel		px;
+	t_complex	z;
 
-	derr_pc.re = (1. / data->res.w) * data->thickness;
-	derr_pc.im = 0;
-	px.im_y = -1;
-	c.re = (data->mouse.re) * 2. - 1.;
-	c.im = (data->mouse.im) * 2. - 1.;
-	fprintf(stderr, "c.re %f\t\tc.im %f\n", c.re, c.im);
-	while (++px.im_y < data->res.h)
+	tdata = (t_thrd_data*)thread_data;
+	px.im_y = tdata->line_start;
+	px_id = tdata->line_start * tdata->data->res.w;
+	while (++px.im_y < tdata->line_end)
 	{
+		z.im = (px.im_y - (tdata->data->res.w / 2.)) / tdata->data->res.w
+			* 5. * tdata->data->zoom + tdata->data->pos.im;
 		px.re_x = -1;
-		while (++px.re_x < data->res.w)
+		while (++px.re_x < tdata->data->res.w)
 		{
-			px_id = px.im_y * data->res.w + px.re_x;
-			z.im = (px.im_y - (data->res.w / 2.)) / data->res.w
-			* 5. * data->zoom + data->pos.im;
-			z.re = (px.re_x - (data->res.w / 2.)) / data->res.w
-			* 5. * data->zoom + data->pos.re;
-			if (data->fract)
-				draw_px(z, z, derr_pc, &data->mlx->img.data[px_id]);
-			else
-				draw_px(z, c, derr_pc, &data->mlx->img.data[px_id]);
+			z.re = (px.re_x - (tdata->data->res.w / 2.)) / tdata->data->res.w
+				* 5. * tdata->data->zoom + tdata->data->pos.re;
+			draw_px(z, z, tdata->derr_pc, &tdata->data->mlx->img.data[px_id]);
+			px_id++;
 		}
 	}
+	return (NULL);
+}
+
+void		*draw_julia(void *thread_data)
+{
+	t_thrd_data	*tdata;
+	int			*img_data;
+	int			px_id;
+	t_pixel		px;
+	t_complex	z;
+
+	tdata = (t_thrd_data*)thread_data;
+	img_data = tdata->data->mlx->img.data;
+	px.im_y = tdata->line_start;
+	px_id = tdata->line_start * tdata->data->res.w;
+	while (++px.im_y < tdata->line_end)
+	{
+		z.im = (px.im_y - (tdata->data->res.w / 2.)) / tdata->data->res.w
+			* 5. * tdata->data->zoom + tdata->data->pos.im;
+		px.re_x = -1;
+		while (++px.re_x < tdata->data->res.w)
+		{
+			z.re = (px.re_x - (tdata->data->res.w / 2.)) / tdata->data->res.w
+				* 5. * tdata->data->zoom + tdata->data->pos.re;
+			draw_px(z, tdata->c, tdata->derr_pc, &img_data[px_id]);
+			px_id++;
+		}
+	}
+	return (NULL);
 }

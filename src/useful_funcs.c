@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   useful_funcs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 17:47:40 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/11/27 00:03:08 by marvin           ###   ########.fr       */
+/*   Updated: 2018/12/02 17:43:05 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ void	msg_exit(char *msg, void *data)
 void	chaos(void *fate)
 {
 	if (fate == NULL)
-		msg_exit("Doom is uppon us.", 0);
+		msg_exit("Doom is uppon us.\n(Could not create window)", 0);
 }

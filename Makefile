@@ -19,31 +19,32 @@ CFLAGS	=	-Wall -Wextra #-Wall -Wextra -Werror
 SRC_PATH =	src
 OBJ_PATH =	obj
 
-SRC_NAME =	main.c			\
-			render.c		\
-			useful_funcs.c	\
-			complex_op.c	\
-			mandelbrot.c	\
-			save_bitmap.c
+SRC_NAME =	draw_slow_mandel_julia.c	\
+			draw_mandel_julia.c			\
+			export_bmp.c				\
+			main.c						\
+			mlx_hooks.c					\
+			render.c					\
+			render_threading.c			\
+			useful_funcs.c				\
+			complex_op.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
-LDFLAGS = -Llibft
-LDLIBS = -lft -lmlx
-
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
-	LDFLAGS += -L./minilibx_macos
-	LDLIBS += -framework OpenGL -framework AppKit
 	LIBX_FD = ./minilibx_macos
+	LDLIBS = -framework OpenGL -framework AppKit
 else
-	LDFLAGS += -L./minilibx_x11
-	LDLIBS += -lXext -lX11
 	LIBX_FD = ./minilibx_x11
+	LDLIBS = -lXext -lX11
 	#Don't forget you need libxext-dev & libx11-dev
 endif
+
+LDFLAGS = -Llibft -L$(LIBX_FD)
+LDLIBS += -lft -lmlx -lpthread
 
 CPPFLAGS = -I./ -I$(LIBX_FD) -I./libft
 

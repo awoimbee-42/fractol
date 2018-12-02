@@ -1,0 +1,9 @@
+Votre logiciel doit proposer au minimum 3 types de fractales différentes, dont au moins l’ensemble de Julia et l’ensemble de Mandelbrot (soit au moins une troisième fractale au choix).
+
+effets psychédéliques.
+
+• Faire tourner la palette de couleur.
+
+• Plein de fractales sympa (des sites recensent plus d’une centaine de types diffé- rents).
+
+• Deux paramètres valides en ligne de commande, deux fenêtres pour deux fractales.

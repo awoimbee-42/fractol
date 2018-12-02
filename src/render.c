@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 18:35:10 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 14:52:53 by marvin           ###   ########.fr       */
+/*   Updated: 2018/12/02 17:47:41 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ void		render(t_mlx *mlx, t_data *data)
 	mlx->img.ptr = mlx_new_image(mlx->ptr, data->res.w, data->res.h);
 	mlx->img.data = (int *)mlx_get_data_addr(mlx->img.ptr, &mlx->img.bpp,
 											&mlx->img.line_s, &mlx->img.endian);
-	render_fract(data);
-	//mlx_clear_window(mlx->ptr, mlx->win);
+	launch_threads(data);
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img.ptr, 0, 0);
-	//mlx_destroy_image(mlx->ptr, mlx->img.ptr);
-	free(mlx->img.ptr);
+	mlx_destroy_image(mlx->ptr, mlx->img.ptr);
 }
 
 void		render_offscreen(t_data *data)
@@ -39,7 +37,7 @@ void		render_offscreen(t_data *data)
 	data->res.w = 10000;
 	if (!(data->mlx->img.data = malloc((data->res.w * data->res.h) * 4)))
 		msg_exit("Not enought ram!", 0);
-	render_fract(data);
+	launch_threads(data);
 	export_bmp(data);
 	free(data->mlx->img.data);
 	data->res = tmp_res;
