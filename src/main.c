@@ -6,18 +6,39 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:39:03 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 20:17:13 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/02 22:26:04 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	usage(void)
+int		usage(void)
 {
-	msg_exit("Usage : ./fractol fractal_name [-res] [-c]\n\
-		\t-c basecolor: color in capitalized hex w/ \"0x\" (default: 0000FF)\n\
-		\t-z zoom: dictate size of object, default to 1\n\
-		\t-res width height: resolution of window, cannot be under 10", 0);
+	msg_exit("Usage : ./fractol fractal_name [-res] [-c]\n"
+		"\tfractal_name can be [slow_]mandelbrot, [slow_]julia, burningship.\n"
+		"\t-c basecolor: basecolor can be 1, 2 or 3 to draw Red, Gred or Blue\n"
+		"\t-res width height: resolution of window, cannot be under 10", 0);
+	return (0);
+}
+
+void		read_fract(void*(**fract)(void*), char *arg)
+{
+	if (ft_strcmp(arg, "mandelbrot") == 0)
+		*fract = &draw_mandel;
+	else if (ft_strcmp(arg, "julia") == 0)
+		*fract = &draw_julia;
+	else if (ft_strcmp(arg, "slow_julia") == 0)
+		*fract = &draw_slow_julia;
+	else if (ft_strcmp(arg, "slow_mandelbrot") == 0)
+		*fract = &draw_slow_mandel;
+	else if (ft_strcmp(arg, "burningship") == 0)
+		*fract = &draw_burningship;
+	else if (ft_strcmp(arg, "cosine_mandelbrot") == 0)
+		*fract = &draw_cos_mandel;
+	else if (ft_strcmp(arg, "cosine_julia") == 0)
+		*fract = &draw_cos_julia;
+	else
+		usage();
 }
 
 void	read_args(t_data *data, char **argv, int argc)
@@ -25,16 +46,7 @@ void	read_args(t_data *data, char **argv, int argc)
 	int		i;
 
 	i = 1;
-	if (ft_strcmp(argv[i], "mandelbrot") == 0)
-		data->fract = &draw_mandel;
-	else if (ft_strcmp(argv[i], "julia") == 0)
-		data->fract = &draw_julia;
-	else if (ft_strcmp(argv[i], "slow_julia") == 0)
-		data->fract = &draw_slow_julia;
-	else if (ft_strcmp(argv[i], "slow_mandelbrot") == 0)
-		data->fract = &draw_slow_mandel;
-	else
-		usage();
+	read_fract(&data->fract, argv[i]);
 	while (++i < argc)
 	{
 		if (ft_strcmp(argv[i], "-res") == 0 && i + 2 < argc)

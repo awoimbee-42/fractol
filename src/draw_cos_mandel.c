@@ -1,43 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_slow_mandel_julia.c                           :+:      :+:    :+:   */
+/*   draw_cos_mandel.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/02 19:42:59 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 22:46:00 by awoimbee         ###   ########.fr       */
+/*   Created: 2018/12/02 20:54:44 by awoimbee          #+#    #+#             */
+/*   Updated: 2018/12/02 22:33:12 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void	draw_px(t_complex z, t_complex c, t_complex derr_pc, int *imgd)
+static void	draw_px(t_complex z, t_complex c, int *imgd)
 {
 	int			iter;
 	int			col;
-	t_complex	derr_inpc;
 
-	derr_inpc = derr_pc;
 	iter = 0;
 	col = 0xFFFFFF;
+	z.re = 0;
+	z.im = 0;
 	while (++iter < ITER_MAX)
 	{
-		if (c_squared_modulus(c_sum(&z, &c))
-		< c_squared_modulus(c_sum(&derr_inpc, &derr_pc))
-		&& (col = 0xFFFFFF))
+		if (c_squared_modulus(&z) > 10 && (col = get_col(iter)))
 			break ;
-		c_sub(&z, &c);
-		c_sub(&derr_inpc, &derr_pc);
-		if (c_squared_modulus(&z) > 100 && (col = get_col(iter)))
-			break ;
-		(void)c_sum(c_mult(c_sum(&derr_inpc, &derr_inpc), &z), &derr_pc);
-		(void)c_sum(c_square(&z), &c);
+		(void)c_cos(c_divide(&z, &c));
 	}
 	*imgd = col;
 }
 
-void		*draw_slow_mandel(void *thread_data)
+void		*draw_cos_mandel(void *thread_data)
 {
 	t_thrd_data	*tdata;
 	int			px_id;
@@ -56,14 +49,14 @@ void		*draw_slow_mandel(void *thread_data)
 		{
 			z.re = (px.re_x - (tdata->data->res.w / 2.)) / tdata->data->res.w
 				* 5. * tdata->data->zoom + tdata->data->pos.re;
-			draw_px(z, z, tdata->derr_pc, &tdata->data->mlx->img.data[px_id]);
+			draw_px(z, z, &tdata->data->mlx->img.data[px_id]);
 			px_id++;
 		}
 	}
 	return (NULL);
 }
 
-void		*draw_slow_julia(void *thread_data)
+void		*draw_cos_julia(void *thread_data)
 {
 	t_thrd_data	*tdata;
 	int			*img_data;
@@ -77,14 +70,12 @@ void		*draw_slow_julia(void *thread_data)
 	px_id = tdata->line_start * tdata->data->res.w;
 	while (++px.im_y < tdata->line_end)
 	{
-		z.im = (px.im_y - (tdata->data->res.w / 2.)) / tdata->data->res.w
-			* 5. * tdata->data->zoom + tdata->data->pos.im;
+		z.im = 0;
 		px.re_x = -1;
 		while (++px.re_x < tdata->data->res.w)
 		{
-			z.re = (px.re_x - (tdata->data->res.w / 2.)) / tdata->data->res.w
-				* 5. * tdata->data->zoom + tdata->data->pos.re;
-			draw_px(z, tdata->c, tdata->derr_pc, &img_data[px_id]);
+			z.re = 0;
+			draw_px(z, tdata->c, &img_data[px_id]);
 			px_id++;
 		}
 	}

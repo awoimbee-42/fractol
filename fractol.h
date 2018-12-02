@@ -23,6 +23,7 @@
 # include <pthread.h> // threading !
 
 # define THREADS_NB 8
+# define ITER_MAX 500
 # define INTMAX 2147483647
 
 # ifdef __APPLE__
@@ -133,15 +134,21 @@ void	*draw_mandel(void *thread_data);
 void	*draw_julia(void *thread_data);
 void	*draw_slow_mandel(void *thread_data);
 void	*draw_slow_julia(void *thread_data);
+void	*draw_burningship(void *thread_data);
+void	*draw_cos_mandel(void *thread_data);
+void	*draw_cos_julia(void *thread_data);
 
 /*
 **	Operations on t_complex type
 */
-void		fill_complex(t_complex *c, float re, float im);
-float		squared_modulus(t_complex *z);
-t_complex	*sum_c(t_complex *z, t_complex *add);
-t_complex	*mult_c(t_complex *z, t_complex *mult);
-t_complex	*square_c(t_complex *z);
+void		c_fill_complex(t_complex *c, float re, float im);
+float		c_squared_modulus(t_complex *z);
+t_complex	*c_sum(t_complex *z, t_complex *add);
+t_complex	*c_mult(t_complex *z, t_complex *mult);
+t_complex	*c_square(t_complex *z);
+t_complex	*c_cos(t_complex *c);
+t_complex	*c_divide(t_complex *c, t_complex *divi);
+t_complex	*c_sub(t_complex *z, t_complex *sub);
 
 /*
 **	Mlx hooks

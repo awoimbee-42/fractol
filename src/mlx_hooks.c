@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 15:38:08 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 20:17:24 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/02 22:29:49 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ int		mouse_click(int keycode, int x, int y, void *param)
 			data->zoom /= 1.25;
 			(data->thickness /= 1.25) < __DBL_MIN__ ?
 			data->thickness = __DBL_MIN__ : 0;
-			data->pos.im += (y - (data->res.h / 2.)) * data->zoom / data->res.w;
-			data->pos.re += (x - (data->res.h / 2.)) * data->zoom / data->res.h;
+			data->pos.im += (y - (data->res.h / 2.)) / data->res.h * data->zoom
+			* 2;
+			data->pos.re += (x - (data->res.w / 2.)) / data->res.h * data->zoom
+			* 2;
 		}
 		else if (keycode == MOUSE_ZOOM_OUT)
 		{

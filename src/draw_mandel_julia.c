@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:50:12 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 20:11:54 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/02 22:16:49 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ static void	draw_px(t_complex z, t_complex c, t_complex derr_pc, int *imgd)
 	derr_inec.im = 0;
 	iter = 0;
 	col = 0xFFFFFF;
-	while (++iter < 500)
+	while (++iter < ITER_MAX)
 	{
-		radius = squared_modulus(&z);
-		if (squared_modulus(&derr_inec) < 0.001 && (col = 0xFFFFFF))
+		radius = c_squared_modulus(&z);
+		if (c_squared_modulus(&derr_inec) < 0.001 && (col = 0xFFFFFF))
 			break ;
-		if (radius < squared_modulus(&derr_inpc) && (col = 0xFFFFFF))
+		if (radius < c_squared_modulus(&derr_inpc) && (col = 0xFFFFFF))
 			break ;
 		if (radius > 100 && (col = get_col(iter)))
 			break ;
-		(void)sum_c(mult_c(sum_c(&derr_inpc, &derr_inpc), &z), &derr_pc);
-		(void)mult_c(sum_c(&derr_inec, &derr_inec), &z);
-		(void)sum_c(square_c(&z), &c);
+		(void)c_sum(c_mult(c_sum(&derr_inpc, &derr_inpc), &z), &derr_pc);
+		(void)c_mult(c_sum(&derr_inec, &derr_inec), &z);
+		(void)c_sum(c_square(&z), &c);
 	}
 	*imgd = col;
 }

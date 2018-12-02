@@ -21,13 +21,16 @@ OBJ_PATH =	obj
 
 SRC_NAME =	draw_slow_mandel_julia.c	\
 			draw_mandel_julia.c			\
+			draw_burningship.c			\
+			draw_cos_mandel.c			\
 			export_bmp.c				\
 			main.c						\
 			mlx_hooks.c					\
 			render.c					\
 			render_threading.c			\
 			useful_funcs.c				\
-			complex_op.c
+			complex_op.c				\
+			complex_op1.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
