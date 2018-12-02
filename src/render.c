@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 18:35:10 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/11/30 18:45:52 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/02 14:52:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ void		render(t_mlx *mlx, t_data *data)
 	mlx->img.data = (int *)mlx_get_data_addr(mlx->img.ptr, &mlx->img.bpp,
 											&mlx->img.line_s, &mlx->img.endian);
 	render_fract(data);
-	mlx_clear_window(mlx->ptr, mlx->win);
+	//mlx_clear_window(mlx->ptr, mlx->win);
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img.ptr, 0, 0);
-	mlx_destroy_image(mlx->ptr, mlx->img.ptr);
+	//mlx_destroy_image(mlx->ptr, mlx->img.ptr);
+	free(mlx->img.ptr);
 }
 
 void		render_offscreen(t_data *data)

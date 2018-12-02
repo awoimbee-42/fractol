@@ -30,7 +30,6 @@ OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
-CPPFLAGS = -I./
 LDFLAGS = -Llibft
 LDLIBS = -lft -lmlx
 
@@ -46,6 +45,8 @@ else
 	#Don't forget you need libxext-dev & libx11-dev
 endif
 
+CPPFLAGS = -I./ -I$(LIBX_FD) -I./libft
+
 all : $(NAME)
 
 $(NAME) : $(OBJ)
@@ -54,7 +55,7 @@ $(NAME) : $(OBJ)
 	@echo "\033[0;31mMaking libft...\033[0m"
 	make -C libft/ all
 	@echo "\033[0;31mMaking $(NAME)...\033[0m"
-	$(CC) $(LDFLAGS) $(LDLIBS) $^ -o $@
+	$(CC) $^ $(LDFLAGS) $(LDLIBS) -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@echo "\033[0;32mMaking $@ with \"$(CFLAGS) $(CPPFLAGS)\"...\033[0m"

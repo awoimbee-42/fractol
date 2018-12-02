@@ -48,6 +48,9 @@
 #  define K_LES 115
 #  define K_LEA 9999
 #  define K_LED 9999
+#  define K_PLS 69
+#  define K_MNS 78
+#  define K_LER 15
 #  define K_ESC 65307
 # endif
 
