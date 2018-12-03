@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:39:03 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 22:26:04 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/03 02:54:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int		main(int argc, char **argv)
 		data.res.w, data.res.h, "Give good grade plz")));
 	render(&mlx, &data);
 	mlx_mouse_hook(mlx.win, &mouse_click, &data);
-	mlx_hook(mlx.win, 2, 0, &keypress, &data);
-	mlx_hook(mlx.win, 6, 1l << 6, &mouse_pos, &data);
+	//mlx_hook(mlx.win, 2, 0, &keypress, &data);
+	mlx_hook(mlx.win, 2, 1L << 0, &keypress, &data);
+	mlx_hook(mlx.win, 6, 1L << 6, &mouse_pos, &data);
 	mlx_loop(mlx.ptr);
 }

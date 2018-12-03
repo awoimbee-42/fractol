@@ -22,7 +22,7 @@
 # include <math.h>
 # include <pthread.h> // threading !
 
-# define THREADS_NB 8
+# define THREADS_NB 15
 # define ITER_MAX 500
 # define INTMAX 2147483647
 
@@ -44,19 +44,21 @@
 #  define K_R 15
 #  define K_ESC 53
 # elif __linux__
-#  define K_AUP 65362
+#  define MOUSE_ZOOM_IN 5
+#  define MOUSE_ZOOM_OUT 4
+#  define K_UP 65362
 #  define K_DWN 65364
 #  define K_LFT 65361
 #  define K_RGT 65363
-#  define K_LEQ 97
-#  define K_LEE 101
-#  define K_LEW 119
-#  define K_LES 115
-#  define K_LEA 9999
-#  define K_LED 9999
-#  define K_PLS 69
-#  define K_MNS 78
-#  define K_LER 15
+#  define K_Q 97
+#  define K_E 101
+#  define K_W 119
+#  define K_S 115
+#  define K_A 9999
+#  define K_D 9999
+#  define K_PLS 61
+#  define K_MNS 45
+#  define K_R 114
 #  define K_ESC 65307
 # endif
 

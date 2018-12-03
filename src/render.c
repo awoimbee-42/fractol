@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 18:35:10 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 17:47:41 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/03 03:44:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,25 @@
 
 int			get_col(int iter)
 {
-	return ((0x0000F * iter) & 0xFFFFFF);
+	int		color;
+
+	if (iter < 64)
+		color = ((iter * 2) << 16);
+	else if (iter < 128)
+		color = ((((iter - 64) * 128) / 126) + 128) << 16;
+	else if (iter < 256)
+		color = ((((iter - 128) * 62) / 127) + 193) << 16;
+	else if (iter < 512)
+		color = 0xFF0000 + (((((iter - 256) * 62) / 255) + 1) << 8);
+	else if (iter < 1024)
+		color = 0xFF0000 + (((((iter - 512) * 63) / 511) + 64) << 8);
+	else if (iter < 2048)
+		color = 0xFF0000 + (((((iter - 1024) * 63) / 1023) + 128) << 8);
+	else if (iter < 4096)
+		color = 0xFF0000 + (((((iter - 2048) * 63) / 2047) + 192) << 8);
+	else
+		color = 0xFFFF00;
+	return (color);
 }
 
 void		render(t_mlx *mlx, t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 15:38:08 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 22:29:49 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/03 03:57:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,19 @@ int		mouse_click(int keycode, int x, int y, void *param)
 			(data->thickness /= 1.25) < __DBL_MIN__ ?
 			data->thickness = __DBL_MIN__ : 0;
 			data->pos.im += (y - (data->res.h / 2.)) / data->res.h * data->zoom
-			* 2;
+			* 1.5;
 			data->pos.re += (x - (data->res.w / 2.)) / data->res.h * data->zoom
-			* 2;
+			* 1.5;
+			render(data->mlx, data);
 		}
 		else if (keycode == MOUSE_ZOOM_OUT)
 		{
 			data->zoom *= 1.25;
 			(data->thickness *= 1.25) > 0.5 ?
 			data->thickness = 0.5 : 0;
+			render(data->mlx, data);
 		}
 		fprintf(stderr, "Mouse button pressed : %d\t%d\t%d\n", x, y, keycode);
-		render(data->mlx, data);
 	}
 	return (1);
 }

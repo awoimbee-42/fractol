@@ -36,18 +36,19 @@ OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
+LDLIBS = -lft -lmlx -lm -lpthread
+
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	LIBX_FD = ./minilibx_macos
-	LDLIBS = -framework OpenGL -framework AppKit
+	LDLIBS += -framework OpenGL -framework AppKit
 else
 	LIBX_FD = ./minilibx_x11
-	LDLIBS = -lXext -lX11
+	LDLIBS += -lXext -lX11
 	#Don't forget you need libxext-dev & libx11-dev
 endif
 
 LDFLAGS = -Llibft -L$(LIBX_FD)
-LDLIBS += -lft -lmlx -lpthread
 
 CPPFLAGS = -I./ -I$(LIBX_FD) -I./libft
 
@@ -59,7 +60,7 @@ $(NAME) : $(OBJ)
 	@echo "\033[0;31mMaking libft...\033[0m"
 	make -C libft/ all
 	@echo "\033[0;31mMaking $(NAME)...\033[0m"
-	$(CC) $^ $(LDFLAGS) $(LDLIBS) -o $@
+	$(CC) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@echo "\033[0;32mMaking $@ with \"$(CFLAGS) $(CPPFLAGS)\"...\033[0m"
