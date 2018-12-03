@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:50:12 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 22:16:49 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/03 15:23:54 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	draw_px(t_complex z, t_complex c, t_complex derr_pc, int *imgd)
 			break ;
 		if (radius < c_squared_modulus(&derr_inpc) && (col = 0xFFFFFF))
 			break ;
-		if (radius > 100 && (col = get_col(iter)))
+		if (radius > 100 && (col = blu_col(iter)))
 			break ;
 		(void)c_sum(c_mult(c_sum(&derr_inpc, &derr_inpc), &z), &derr_pc);
 		(void)c_mult(c_sum(&derr_inec, &derr_inec), &z);

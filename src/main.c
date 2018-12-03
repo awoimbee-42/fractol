@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:39:03 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/03 02:54:08 by marvin           ###   ########.fr       */
+/*   Updated: 2018/12/03 16:26:53 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 int		usage(void)
 {
-	msg_exit("Usage : ./fractol fractal_name [-res] [-c]\n"
-		"\tfractal_name can be [slow_]mandelbrot, [slow_]julia, burningship.\n"
-		"\t-c basecolor: basecolor can be 1, 2 or 3 to draw Red, Gred or Blue\n"
-		"\t-res width height: resolution of window, cannot be under 10", 0);
+	msg_exit("Usage : ./fractol fractal_name [-res]\n"
+		"\tfractal_name can be [slow_]mandelbrot, [slow_]julia,"
+		" cosine_mandelbrot, burningship.\n"
+		"\t-res width height: resolution of window, cannot be under 10\n"
+		"\t\t(default is 700x700)\n", 0);
 	return (0);
 }
 
-void		read_fract(void*(**fract)(void*), char *arg)
+void	read_fract(void *(**fract)(void*), char *arg)
 {
 	if (ft_strcmp(arg, "mandelbrot") == 0)
 		*fract = &draw_mandel;
@@ -35,13 +36,11 @@ void		read_fract(void*(**fract)(void*), char *arg)
 		*fract = &draw_burningship;
 	else if (ft_strcmp(arg, "cosine_mandelbrot") == 0)
 		*fract = &draw_cos_mandel;
-	else if (ft_strcmp(arg, "cosine_julia") == 0)
-		*fract = &draw_cos_julia;
 	else
 		usage();
 }
 
-void	read_args(t_data *data, char **argv, int argc)
+void	read_args(t_env *data, char **argv, int argc)
 {
 	int		i;
 
@@ -61,7 +60,7 @@ void	read_args(t_data *data, char **argv, int argc)
 	}
 }
 
-void	init(t_data *data, t_mlx *mlx)
+void	init(t_env *data, t_mlx *mlx)
 {
 	chaos((mlx->ptr = mlx_init()));
 	data->res.h = 700;
@@ -77,7 +76,7 @@ void	init(t_data *data, t_mlx *mlx)
 int		main(int argc, char **argv)
 {
 	t_mlx	mlx;
-	t_data	data;
+	t_env	data;
 
 	if (argc == 1 || argv[1][0] == '-')
 		usage();
@@ -85,10 +84,10 @@ int		main(int argc, char **argv)
 	read_args(&data, argv, argc);
 	chaos((mlx.win = mlx_new_window(mlx.ptr,
 		data.res.w, data.res.h, "Give good grade plz")));
-	render(&mlx, &data);
+	print_instructions();
 	mlx_mouse_hook(mlx.win, &mouse_click, &data);
-	//mlx_hook(mlx.win, 2, 0, &keypress, &data);
 	mlx_hook(mlx.win, 2, 1L << 0, &keypress, &data);
 	mlx_hook(mlx.win, 6, 1L << 6, &mouse_pos, &data);
+	render(&mlx, &data);
 	mlx_loop(mlx.ptr);
 }

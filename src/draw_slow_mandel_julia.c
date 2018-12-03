@@ -6,32 +6,23 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 19:42:59 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 22:46:00 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/03 15:31:22 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void	draw_px(t_complex z, t_complex c, t_complex derr_pc, int *imgd)
+static void	draw_px(t_complex z, t_complex c, int *imgd)
 {
 	int			iter;
 	int			col;
-	t_complex	derr_inpc;
 
-	derr_inpc = derr_pc;
 	iter = 0;
-	col = 0xFFFFFF;
+	col = 0x000000;
 	while (++iter < ITER_MAX)
 	{
-		if (c_squared_modulus(c_sum(&z, &c))
-		< c_squared_modulus(c_sum(&derr_inpc, &derr_pc))
-		&& (col = 0xFFFFFF))
+		if (c_squared_modulus(&z) > 100 && (col = red_col(iter)))
 			break ;
-		c_sub(&z, &c);
-		c_sub(&derr_inpc, &derr_pc);
-		if (c_squared_modulus(&z) > 100 && (col = get_col(iter)))
-			break ;
-		(void)c_sum(c_mult(c_sum(&derr_inpc, &derr_inpc), &z), &derr_pc);
 		(void)c_sum(c_square(&z), &c);
 	}
 	*imgd = col;
@@ -56,7 +47,7 @@ void		*draw_slow_mandel(void *thread_data)
 		{
 			z.re = (px.re_x - (tdata->data->res.w / 2.)) / tdata->data->res.w
 				* 5. * tdata->data->zoom + tdata->data->pos.re;
-			draw_px(z, z, tdata->derr_pc, &tdata->data->mlx->img.data[px_id]);
+			draw_px(z, z, &tdata->data->mlx->img.data[px_id]);
 			px_id++;
 		}
 	}
@@ -84,7 +75,7 @@ void		*draw_slow_julia(void *thread_data)
 		{
 			z.re = (px.re_x - (tdata->data->res.w / 2.)) / tdata->data->res.w
 				* 5. * tdata->data->zoom + tdata->data->pos.re;
-			draw_px(z, tdata->c, tdata->derr_pc, &img_data[px_id]);
+			draw_px(z, tdata->c, &img_data[px_id]);
 			px_id++;
 		}
 	}

@@ -6,13 +6,13 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 20:55:36 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 22:39:07 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/03 16:19:49 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-t_complex	*c_cos(t_complex *c)
+t_complex		*c_cos(t_complex *c)
 {
 	double	re;
 
@@ -29,7 +29,7 @@ t_complex		*c_sub(t_complex *z, t_complex *sub)
 	return (z);
 }
 
-t_complex	*c_divide(t_complex *c, t_complex *divi)
+t_complex		*c_divide(t_complex *c, t_complex *divi)
 {
 	double	re;
 

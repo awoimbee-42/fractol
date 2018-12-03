@@ -59,7 +59,7 @@ $(NAME) : $(OBJ)
 	make -C $(LIBX_FD) all
 	@echo "\033[0;31mMaking libft...\033[0m"
 	make -C libft/ all
-	@echo "\033[0;31mMaking $(NAME)...\033[0m"
+	@echo "\033[0;31mLinking $(NAME)...\033[0m"
 	$(CC) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c

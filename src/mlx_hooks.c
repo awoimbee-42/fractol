@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 15:38:08 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/03 03:57:18 by marvin           ###   ########.fr       */
+/*   Updated: 2018/12/03 16:23:58 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		keypress(int keycode, void *param)
 {
-	t_data	*data;
+	t_env	*data;
 
-	data = (t_data*)param;
+	data = (t_env*)param;
 	keycode == K_W ? data->zoom /= 1.25 : 0;
 	keycode == K_S ? data->zoom *= 1.25 : 0;
 	keycode == K_LFT ? data->pos.re -= data->zoom : 0;
@@ -31,16 +31,15 @@ int		keypress(int keycode, void *param)
 		(data->thickness /= 2) < __DBL_MIN__ ?
 		data->thickness = __DBL_MIN__ : 0;
 	keycode == K_ESC ? exit(0) : 0;
-	fprintf(stderr, "Key pressed : %d\n", keycode);
 	render(data->mlx, data);
 	return (1);
 }
 
 int		mouse_pos(int x, int y, void *param)
 {
-	t_data	*data;
+	t_env	*data;
 
-	data = (t_data*)param;
+	data = (t_env*)param;
 	if ((data->fract == &draw_julia || data->fract == &draw_slow_julia)
 	&& x > 0 && x < data->res.w
 	&& y > 0 && y < data->res.w)
@@ -54,11 +53,10 @@ int		mouse_pos(int x, int y, void *param)
 
 int		mouse_click(int keycode, int x, int y, void *param)
 {
-	t_data	*data;
+	t_env	*data;
 
-	data = (t_data*)param;
-	if (x > 0 && x < data->res.w
-	&& y > 0 && y < data->res.w)
+	data = (t_env*)param;
+	if (x > 0 && x < data->res.w && y > 0 && y < data->res.w)
 	{
 		if (keycode == MOUSE_ZOOM_IN)
 		{
@@ -78,7 +76,6 @@ int		mouse_click(int keycode, int x, int y, void *param)
 			data->thickness = 0.5 : 0;
 			render(data->mlx, data);
 		}
-		fprintf(stderr, "Mouse button pressed : %d\t%d\t%d\n", x, y, keycode);
 	}
 	return (1);
 }

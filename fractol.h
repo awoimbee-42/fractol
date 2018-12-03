@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 22:27:15 by marvin            #+#    #+#             */
-/*   Updated: 2018/11/26 22:27:15 by marvin           ###   ########.fr       */
+/*   Updated: 2018/12/03 16:25:18 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 
 # include "mlx.h"
 # include "libft/libft.h"
-# include <stdio.h>		//perror() strerror()
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <math.h>
-# include <pthread.h> // threading !
+# include <pthread.h>
 
-# define THREADS_NB 15
-# define ITER_MAX 500
+# define THREADS_NB 4
+# define ITER_MAX 1000
 # define INTMAX 2147483647
 
 # ifdef __APPLE__
@@ -33,12 +32,8 @@
 #  define K_DWN 125
 #  define K_LFT 123
 #  define K_RGT 124
-#  define K_Q 12
-#  define K_E 14
 #  define K_W 13
 #  define K_S 1
-#  define K_A 0
-#  define K_D 2
 #  define K_PLS 69
 #  define K_MNS 78
 #  define K_R 15
@@ -50,12 +45,8 @@
 #  define K_DWN 65364
 #  define K_LFT 65361
 #  define K_RGT 65363
-#  define K_Q 97
-#  define K_E 101
 #  define K_W 119
 #  define K_S 115
-#  define K_A 9999
-#  define K_D 9999
 #  define K_PLS 61
 #  define K_MNS 45
 #  define K_R 114
@@ -96,7 +87,7 @@ typedef struct	s_res
 	int			h;
 }				t_res;
 
-typedef struct	s_data
+typedef struct	s_env
 {
 	t_mlx		*mlx;
 	t_res		res;
@@ -106,11 +97,11 @@ typedef struct	s_data
 	t_complex	mouse;
 	double		thickness;
 	pthread_t	threads[THREADS_NB];
-}				t_data;
+}				t_env;
 
 typedef struct	s_thrd_data
 {
-	t_data		*data;
+	t_env		*data;
 	int			line_start;
 	int			line_end;
 	t_complex	c;
@@ -120,43 +111,45 @@ typedef struct	s_thrd_data
 /*
 **	Error handling
 */
-void		chaos(void *fate);
-void		msg_exit(char *msg, void *data);
+void			chaos(void *fate);
+void			msg_exit(char *msg, void *data);
 
 /*
 **	rendering
 */
-void		render(t_mlx *mlx, t_data *data);
-void		render_offscreen(t_data *data);
-void		launch_threads(t_data *data);
-int			get_col(int iter);
-void		export_bmp(t_data *data);
+void			render(t_mlx *mlx, t_env *data);
+void			render_offscreen(t_env *data);
+void			launch_threads(t_env *data);
+void			export_bmp(t_env *data);
+int				red_col(int iter);
+int				blu_col(int iter);
 
-void	*draw_mandel(void *thread_data);
-void	*draw_julia(void *thread_data);
-void	*draw_slow_mandel(void *thread_data);
-void	*draw_slow_julia(void *thread_data);
-void	*draw_burningship(void *thread_data);
-void	*draw_cos_mandel(void *thread_data);
-void	*draw_cos_julia(void *thread_data);
+void			*draw_mandel(void *thread_data);
+void			*draw_julia(void *thread_data);
+void			*draw_slow_mandel(void *thread_data);
+void			*draw_slow_julia(void *thread_data);
+void			*draw_burningship(void *thread_data);
+void			*draw_cos_mandel(void *thread_data);
 
 /*
 **	Operations on t_complex type
 */
-void		c_fill_complex(t_complex *c, float re, float im);
-float		c_squared_modulus(t_complex *z);
-t_complex	*c_sum(t_complex *z, t_complex *add);
-t_complex	*c_mult(t_complex *z, t_complex *mult);
-t_complex	*c_square(t_complex *z);
-t_complex	*c_cos(t_complex *c);
-t_complex	*c_divide(t_complex *c, t_complex *divi);
-t_complex	*c_sub(t_complex *z, t_complex *sub);
+void			c_fill_complex(t_complex *c, float re, float im);
+float			c_squared_modulus(t_complex *z);
+t_complex		*c_sum(t_complex *z, t_complex *add);
+t_complex		*c_mult(t_complex *z, t_complex *mult);
+t_complex		*c_square(t_complex *z);
+t_complex		*c_cos(t_complex *c);
+t_complex		*c_divide(t_complex *c, t_complex *divi);
+t_complex		*c_sub(t_complex *z, t_complex *sub);
 
 /*
 **	Mlx hooks
 */
-int			mouse_pos(int x, int y, void *param);
-int			mouse_click(int x, int y, int keycode, void *param);
-int			keypress(int keycode, void *param);
+int				mouse_pos(int x, int y, void *param);
+int				mouse_click(int x, int y, int keycode, void *param);
+int				keypress(int keycode, void *param);
+
+void			print_instructions(void);
 
 #endif

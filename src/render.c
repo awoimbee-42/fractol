@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 18:35:10 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/03 03:44:51 by marvin           ###   ########.fr       */
+/*   Updated: 2018/12/03 15:26:21 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int			get_col(int iter)
+int			red_col(int iter)
 {
 	int		color;
 
@@ -35,7 +35,12 @@ int			get_col(int iter)
 	return (color);
 }
 
-void		render(t_mlx *mlx, t_data *data)
+int			blu_col(int iter)
+{
+	return ((0x00000F * iter) & 0x0000FF);
+}
+
+void		render(t_mlx *mlx, t_env *data)
 {
 	mlx->img.ptr = mlx_new_image(mlx->ptr, data->res.w, data->res.h);
 	mlx->img.data = (int *)mlx_get_data_addr(mlx->img.ptr, &mlx->img.bpp,
@@ -45,7 +50,7 @@ void		render(t_mlx *mlx, t_data *data)
 	mlx_destroy_image(mlx->ptr, mlx->img.ptr);
 }
 
-void		render_offscreen(t_data *data)
+void		render_offscreen(t_env *data)
 {
 	t_res	tmp_res;
 

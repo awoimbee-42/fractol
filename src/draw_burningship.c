@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_burningship.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 20:33:39 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/03 03:51:34 by marvin           ###   ########.fr       */
+/*   Updated: 2018/12/03 15:24:34 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@
 static void	draw_px(t_complex z, t_complex c, int *imgd)
 {
 	int			iter;
-	int			col;
 	t_complex	derr_inec;
 	float		radius;
 
 	derr_inec.re = 1;
 	derr_inec.im = 0;
 	iter = 0;
-	col = 0xFFFFFF;
 	while (++iter < ITER_MAX)
 	{
 		radius = c_squared_modulus(&z);
@@ -41,7 +39,7 @@ static void	draw_px(t_complex z, t_complex c, int *imgd)
 		z.im = fabs(z.im);
 		(void)c_sum(c_square(&z), &c);
 	}
-	*imgd = get_col(iter);
+	*imgd = red_col(iter);
 }
 
 void		*draw_burningship(void *thread_data)

@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 17:49:02 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/02 20:01:55 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/03 14:40:23 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		join_threads(pthread_t *threads)
 	}
 }
 
-void		launch_threads(t_data *data)
+void		launch_threads(t_env *data)
 {
 	int			i;
 	t_complex	derr_pc;

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_bitmap.c                                      :+:      :+:    :+:   */
+/*   export_bmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:53:25 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/11/30 18:45:24 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/03 14:40:23 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include <stdio.h>
 
-void	export_bmp(t_data *data)
+void	export_bmp(t_env *data)
 {
 	FILE			*f;
 	int				filesize;
