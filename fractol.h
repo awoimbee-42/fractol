@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 22:27:15 by marvin            #+#    #+#             */
-/*   Updated: 2018/12/03 16:25:18 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/10 23:22:02 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <math.h>
 # include <pthread.h>
 
-# define THREADS_NB 4
+# define THREADS_NB 20
 # define ITER_MAX 1000
 # define INTMAX 2147483647
 
@@ -52,6 +52,15 @@
 #  define K_R 114
 #  define K_ESC 65307
 # endif
+
+typedef struct	s_img t_img;
+typedef struct	s_mlx t_mlx;
+typedef struct	s_pixel t_pixel;
+typedef struct	s_complex t_complex;
+typedef struct	s_res t_res;
+typedef struct	s_thread t_thread;
+typedef struct	s_env t_env;
+
 
 typedef struct	s_img
 {
@@ -87,6 +96,17 @@ typedef struct	s_res
 	int			h;
 }				t_res;
 
+
+typedef struct	s_thread
+{
+	pthread_t	thread;
+	t_env		*data;
+	int			line_start;
+	int			line_end;
+	t_complex	c;
+	t_complex	derr_pc;
+}				t_thread;
+
 typedef struct	s_env
 {
 	t_mlx		*mlx;
@@ -96,17 +116,8 @@ typedef struct	s_env
 	t_complex	pos;
 	t_complex	mouse;
 	double		thickness;
-	pthread_t	threads[THREADS_NB];
+	t_thread	threads[THREADS_NB];
 }				t_env;
-
-typedef struct	s_thrd_data
-{
-	t_env		*data;
-	int			line_start;
-	int			line_end;
-	t_complex	c;
-	t_complex	derr_pc;
-}				t_thrd_data;
 
 /*
 **	Error handling

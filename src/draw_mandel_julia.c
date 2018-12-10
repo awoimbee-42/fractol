@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:50:12 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/03 15:23:54 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/10 23:23:47 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ static void	draw_px(t_complex z, t_complex c, t_complex derr_pc, int *imgd)
 
 void		*draw_mandel(void *thread_data)
 {
-	t_thrd_data	*tdata;
+	t_thread	*tdata;
 	int			px_id;
 	t_pixel		px;
 	t_complex	z;
 
-	tdata = (t_thrd_data*)thread_data;
+	tdata = (t_thread*)thread_data;
 	px.im_y = tdata->line_start;
 	px_id = tdata->line_start * tdata->data->res.w;
 	while (++px.im_y < tdata->line_end)
@@ -75,13 +75,13 @@ void		*draw_mandel(void *thread_data)
 
 void		*draw_julia(void *thread_data)
 {
-	t_thrd_data	*tdata;
+	t_thread	*tdata;
 	int			*img_data;
 	int			px_id;
 	t_pixel		px;
 	t_complex	z;
 
-	tdata = (t_thrd_data*)thread_data;
+	tdata = (t_thread*)thread_data;
 	img_data = tdata->data->mlx->img.data;
 	px.im_y = tdata->line_start;
 	px_id = tdata->line_start * tdata->data->res.w;
