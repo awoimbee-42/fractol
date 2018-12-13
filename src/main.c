@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:39:03 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/03 16:26:53 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/13 02:08:41 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ void	init(t_env *data, t_mlx *mlx)
 	data->res.h = 700;
 	data->res.w = 700;
 	data->mlx = mlx;
+	data->iter_max = 50;
 	data->zoom = 1.;
 	data->pos.im = 0;
 	data->pos.im = 0;
-	data->thickness = 0.01;
 	data->fract = 0;
 }
 

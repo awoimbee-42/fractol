@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_bmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:53:25 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/03 14:40:23 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/13 01:56:37 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	export_bmp(t_env *data)
 	f = fopen("img.bmp", "wb");
 	fwrite(bmpfileheader, 1, 14, f);
 	fwrite(bmpinfoheader, 1, 40, f);
-	fwrite(data->mlx->img.data, data->res.w * data->res.h * 4, 1, f);
+	fwrite(data->mlx->img.px, data->res.w * data->res.h * 4, 1, f);
 	fclose(f);
 }
