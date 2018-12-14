@@ -30,7 +30,7 @@ static void	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 	while (++iter < iter_max)
 	{
 		radius = c_squared_modulus(&z);
-		if (c_squared_modulus(&derr_inec) < 0.001 && (iter = ITER_MAX))
+		if (c_squared_modulus(&derr_inec) < 0.001 && (iter = iter_max))
 			break ;
 		if (radius > 100)
 			break ;

@@ -22,7 +22,6 @@
 # include <pthread.h>
 
 # define THREADS_NB 20
-# define ITER_MAX 50
 
 # ifdef __APPLE__
 #  define MOUSE_ZOOM_IN 5

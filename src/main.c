@@ -6,7 +6,7 @@
 /*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:39:03 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/13 02:08:41 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/14 11:37:13 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	read_args(t_env *data, char **argv, int argc)
 
 void	init(t_env *data, t_mlx *mlx)
 {
+	int		i;
+
 	chaos((mlx->ptr = mlx_init()));
 	data->res.h = 700;
 	data->res.w = 700;
@@ -71,6 +73,13 @@ void	init(t_env *data, t_mlx *mlx)
 	data->pos.im = 0;
 	data->pos.im = 0;
 	data->fract = 0;
+	i = -1;
+	while (++i < THREADS_NB)
+	{
+		data->threads[i].env = data;
+		data->threads[i].line_start = (i * data->res.h) / THREADS_NB;
+		data->threads[i].line_end = (((i + 1) * data->res.h) / THREADS_NB) + 1;
+	}
 }
 
 int		main(int argc, char **argv)
