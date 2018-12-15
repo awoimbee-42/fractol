@@ -14,7 +14,7 @@ NAME	=	fractol
 
 CC = gcc
 
-CFLAGS	=	-Wall -Wextra #-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -O3 #-Wall -Wextra -Werror
 
 SRC_PATH =	src
 OBJ_PATH =	obj
@@ -30,8 +30,9 @@ SRC_NAME =	draw_slow_mandel_julia.c	\
 			render_threading.c			\
 			useful_funcs.c				\
 			complex_op.c				\
-			complex_op1.c
-			
+			complex_op1.c				\
+			complex_op2.c
+
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

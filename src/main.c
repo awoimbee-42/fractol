@@ -6,7 +6,7 @@
 /*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:39:03 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/14 11:37:13 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/15 01:40:02 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	init(t_env *data, t_mlx *mlx)
 	data->mlx = mlx;
 	data->iter_max = 50;
 	data->zoom = 1.;
-	data->pos.im = 0;
+	data->pos.re = 0;
 	data->pos.im = 0;
 	data->fract = 0;
 	i = -1;

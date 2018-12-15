@@ -6,7 +6,7 @@
 /*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 17:49:02 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/14 11:37:25 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/15 01:22:47 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void		launch_threads(t_env *data)
 	int			i;
 	t_complex	c;
 
-	c.re = (data->mouse.re) * 2. - 1.;
-	c.im = (data->mouse.im) * 2. - 1.;
+	c.re = (data->mouse.re) * 2.L - 1.L;
+	c.im = (data->mouse.im) * 2.L - 1.L;
 	i = -1;
 	while (++i < THREADS_NB)
 	{

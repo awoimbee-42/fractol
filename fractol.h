@@ -6,7 +6,7 @@
 /*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 22:27:15 by marvin            #+#    #+#             */
-/*   Updated: 2018/12/13 02:29:28 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/15 01:32:57 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ typedef struct	s_pixel
 
 typedef struct	s_complex
 {
-	double		re;
-	double		im;
+	long double		re; //WHY ?
+	long double		im;
 }				t_complex;
 
 typedef struct	s_res
@@ -111,7 +111,7 @@ typedef struct	s_env
 	t_res		res;
 	void		*(*fract)(void*);
 	int			iter_max;
-	double		zoom;
+	long double	zoom;
 	t_complex	pos;
 	t_complex	mouse;
 	t_thread	threads[THREADS_NB];
@@ -144,13 +144,16 @@ void			*draw_cos_mandel(void *thread_data);
 **	Operations on t_complex type
 */
 void			c_fill_complex(t_complex *c, float re, float im);
-float			c_squared_modulus(t_complex *z);
+double			c_squared_modulus(t_complex *z);
 t_complex		*c_sum(t_complex *z, t_complex *add);
 t_complex		*c_mult(t_complex *z, t_complex *mult);
 t_complex		*c_square(t_complex *z);
 t_complex		*c_cos(t_complex *c);
-t_complex		*c_divide(t_complex *c, t_complex *divi);
+t_complex		*c_sin(t_complex *c);
+t_complex		*c_div(t_complex *c, t_complex *divi);
 t_complex		*c_sub(t_complex *z, t_complex *sub);
+t_complex		*c_opsite(t_complex *c);
+t_complex		*c_swap(t_complex *c1, t_complex *c2);
 
 /*
 **	Mlx hooks

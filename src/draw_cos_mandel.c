@@ -6,7 +6,7 @@
 /*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 20:54:44 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/14 11:43:00 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/15 01:58:27 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,23 @@ static int	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 {
 	int			iter;
 	int			col;
+	t_complex	derr_inpc;
+	t_complex	tmp;
 
+	derr_inpc = z;
 	iter = 0;
 	col = 0xFFFFFF;
+
 	while (++iter < iter_max)
 	{
+		if (c_squared_modulus(&derr_inpc) < 0.00001 && (col = 0xFF0000))
+			break ;
 		if (c_squared_modulus(&z) > 50 && (col = blu_col(iter)))
 			break ;
-		(void)c_cos(c_divide(&z, &c));
+		tmp = derr_inpc;
+		derr_inpc = z;
+		(void)c_mult(c_div(c_opsite(c_sin(c_div(&derr_inpc, &c))), &c), &tmp);
+		(void)c_cos(c_div(&z, &c));
 	}
 	*imgd = col;
 	return (1);
@@ -47,7 +56,7 @@ void		*draw_cos_mandel(void *thread_data)
 	{
 		z.re = (-2.5 * env->zoom + env->pos.re);
 		while (++px.re_x < env->res.w)
-			if (draw_px((t_c){0, 0}, z,
+			if (draw_px((t_c){1, 0}, z,
 				env->iter_max, &env->mlx->img.px[px_id++]))
 				z.re += zstep.re;
 		z.im += zstep.im;

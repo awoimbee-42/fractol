@@ -6,7 +6,7 @@
 /*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 15:38:08 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/13 02:21:49 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/15 01:39:10 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		mouse_click(int keycode, int x, int y, void *param)
 			data->iter_max += 1;
 			data->pos.im += (y - (data->res.h / 2.)) / data->res.h * data->zoom
 			* 1.5;
-			data->pos.re += (x - (data->res.w / 2.)) / data->res.h * data->zoom
+			data->pos.re += (x - (data->res.w / 2.L)) / data->res.w * data->zoom
 			* 1.5;
 			render(data->mlx, data);
 		}

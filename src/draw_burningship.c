@@ -6,7 +6,7 @@
 /*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 20:33:39 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/13 02:28:33 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/15 01:40:22 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	derr_inpc  = (Pⁿ)'(c)
 **	colors are : not enought iter, intside, then outside
 */
-
+#include <stdio.h>
 static void	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 {
 	int			iter;
@@ -35,8 +35,8 @@ static void	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 		if (radius > 100)
 			break ;
 		(void)c_mult(c_sum(&derr_inec, &derr_inec), &z);
-		z.re = fabs(z.re);
-		z.im = fabs(z.im);
+		z.re = fabsl(z.re);
+		z.im = fabsl(z.im);
 		(void)c_sum(c_square(&z), &c);
 	}
 	*imgd = red_col(iter);
@@ -63,6 +63,7 @@ void		*draw_burningship(void *thread_data)
 		{
 			z.re = (px.re_x - (env->res.w / 2.)) / env->res.w
 				* 5. * env->zoom + env->pos.re;
+			//printf("%.50Lf\n", (long double)(env->pos.re) );
 			draw_px(z, z, env->iter_max, &img_data[px_id]);
 			px_id++;
 		}

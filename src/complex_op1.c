@@ -6,7 +6,7 @@
 /*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 20:55:36 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/13 02:00:13 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/15 01:18:32 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,28 @@
 
 t_complex		*c_cos(t_complex *c)
 {
-	double	re;
+	typeof(c->re)	re;
 
 	re = c->re;
 	c->re = cos(c->re) * cosh(c->im);
 	c->im = -1 * sin(re) * sinh(c->im);
+	return (c);
+}
+
+t_complex		*c_sin(t_complex *c)
+{
+	typeof(c->re)	re;
+
+	re = c->re;
+	c->re = cosh(c->im) * sin(c->im);
+	c->im = cos(re) * sinh(c->im);
+	return (c);
+}
+
+t_complex		*c_opsite(t_complex *c)
+{
+	c->re = -c->re;
+	c->im = -c->im;
 	return (c);
 }
 
@@ -29,9 +46,9 @@ t_complex		*c_sub(t_complex *z, t_complex *sub)
 	return (z);
 }
 
-t_complex		*c_divide(t_complex *c, t_complex *divi)
+t_complex		*c_div(t_complex *c, t_complex *divi)
 {
-	double	re;
+	typeof(c->re)	re;
 
 	re = c->re;
 	c->re = ((c->re * divi->re) + (c->im * divi->im))
