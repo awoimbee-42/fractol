@@ -14,7 +14,7 @@ NAME	=	fractol
 
 CC = gcc
 
-CFLAGS	=	-Wall -Wextra -O3 #-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra #-Wall -Wextra -Werror
 
 SRC_PATH =	src
 OBJ_PATH =	obj

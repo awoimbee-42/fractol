@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   complex_op1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 20:55:36 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/15 01:18:32 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/16 19:52:30 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ t_complex		*c_sin(t_complex *c)
 	typeof(c->re)	re;
 
 	re = c->re;
-	c->re = cosh(c->im) * sin(c->im);
+	c->re = sin(re) * cosh(c->im);
 	c->im = cos(re) * sinh(c->im);
+	// c->re = cosh(c->im) * sin(c->im);
+	// c->im = cos(re) * sinh(c->im);
 	return (c);
 }
 

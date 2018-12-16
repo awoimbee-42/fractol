@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   draw_cos_mandel.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 20:54:44 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/15 01:58:27 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/16 21:04:33 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include <time.h>
 
-static int	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
+static void	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 {
 	int			iter;
 	int			col;
@@ -22,12 +23,11 @@ static int	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 	derr_inpc = z;
 	iter = 0;
 	col = 0xFFFFFF;
-
 	while (++iter < iter_max)
 	{
-		if (c_squared_modulus(&derr_inpc) < 0.00001 && (col = 0xFF0000))
+		if ((derr_inpc.re * derr_inpc.re + derr_inpc.im * derr_inpc.im) < 0.1)
 			break ;
-		if (c_squared_modulus(&z) > 50 && (col = blu_col(iter)))
+		if ((z.re * z.re + z.im * z.im) > 10000 && (col = blu_col(iter)))
 			break ;
 		tmp = derr_inpc;
 		derr_inpc = z;
@@ -35,7 +35,6 @@ static int	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 		(void)c_cos(c_div(&z, &c));
 	}
 	*imgd = col;
-	return (1);
 }
 
 void		*draw_cos_mandel(void *thread_data)
@@ -56,9 +55,10 @@ void		*draw_cos_mandel(void *thread_data)
 	{
 		z.re = (-2.5 * env->zoom + env->pos.re);
 		while (++px.re_x < env->res.w)
-			if (draw_px((t_c){1, 0}, z,
-				env->iter_max, &env->mlx->img.px[px_id++]))
-				z.re += zstep.re;
+		{
+			draw_px((t_c){1, 0}, z, env->iter_max, &env->mlx->img.px[px_id++]);
+			z.re += zstep.re;
+		}
 		z.im += zstep.im;
 	}
 	return (NULL);

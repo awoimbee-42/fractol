@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_mandel_julia.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:50:12 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/15 01:48:19 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/16 21:06:00 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 	col = 0xFFFFFF;
 	while (++iter < iter_max)
 	{
-		if (c_squared_modulus(&derr_inec) < 0.001 && (col = 0xFFFFFF))
+		if ((derr_inec.re * derr_inec.re + derr_inec.im * derr_inec.im) < 0.001)
 			break ;
-		if (c_squared_modulus(&z) > 4. && (col = blu_col(iter)))
+		if ((z.re * z.re + z.im * z.im) > 100. && (col = blu_col(iter)))
 			break ;
 		(void)c_mult(c_sum(&derr_inec, &derr_inec), &z);
 		(void)c_sum(c_square(&z), &c);

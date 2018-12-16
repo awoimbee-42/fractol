@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 22:27:15 by marvin            #+#    #+#             */
-/*   Updated: 2018/12/15 01:32:57 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/16 20:06:50 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void			*draw_cos_mandel(void *thread_data);
 */
 void			c_fill_complex(t_complex *c, float re, float im);
 double			c_squared_modulus(t_complex *z);
+int				c_squared_mod_inf(t_complex *z, double threshhold);
 t_complex		*c_sum(t_complex *z, t_complex *add);
 t_complex		*c_mult(t_complex *z, t_complex *mult);
 t_complex		*c_square(t_complex *z);
