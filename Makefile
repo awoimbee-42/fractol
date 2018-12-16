@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/26 22:06:19 by marvin            #+#    #+#              #
-#    Updated: 2018/11/26 22:06:19 by marvin           ###   ########.fr        #
+#    Updated: 2018/12/16 21:20:16 by awoimbee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,13 +54,20 @@ LDFLAGS = -Llibft -L$(LIBX_FD)
 
 CPPFLAGS = -I./ -I$(LIBX_FD) -I./libft
 
+LIBS = libft/libft.a $(LIBX_FD)/libmlx.a
+
 all : $(NAME)
 
-$(NAME) : $(OBJ)
-	@echo -e "\e[0;31mMaking libx...\033[0m"
-	make -C $(LIBX_FD) all
+libft/libft.a :
 	@echo -e "\033[0;31mMaking libft...\033[0m"
 	make -C libft/ all
+
+$(LIBX_FD)/libmlx.a :
+	@echo -e "\e[0;31mMaking libx...\033[0m"
+	make all -C $(LIBX_FD)
+
+
+$(NAME) : $(LIBS) $(OBJ)
 	@echo -e "\033[0;31mLinking $(NAME)...\033[0m"
 	$(CC) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
@@ -71,9 +78,9 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 
 clean :
 	@echo -e "\033[0;31mCleaning libx...\033[0m"
-	make -C $(LIBX_FD) clean
+	make clean -C $(LIBX_FD)
 	@echo -e "\033[0;31mCleaning libft...\033[0m"
-	make -C libft/ fclean
+	make fclean -C libft
 	@echo -e "\033[0;31mCleaning objects...\033[0m"
 	rm -f $(OBJ)
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
