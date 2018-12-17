@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 20:33:39 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/17 14:10:20 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/17 19:41:12 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 	int			iter;
 	t_complex	derr_inec;
 	float		radius;
-	int 		col;
+	int			col;
 
 	derr_inec.re = 1;
 	derr_inec.im = 0;
@@ -43,7 +43,7 @@ static void	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 	}
 	if (iter != iter_max)
 		col = red_col(iter);
-	*imgd = col;;
+	*imgd = col;
 }
 
 void		*draw_burningship(void *thread_data)

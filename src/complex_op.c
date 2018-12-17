@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:42:31 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/17 14:33:28 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/17 19:37:11 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_complex		*c_sum(t_complex *z, t_complex *add)
 
 t_complex		*c_mult(t_complex *z, t_complex *mult)
 {
-	typeof(z->re)	re;
+	t_floating	re;
 
 	re = z->re;
 	z->re = z->re * mult->re - z->im * mult->im;
@@ -42,7 +42,7 @@ t_complex		*c_mult(t_complex *z, t_complex *mult)
 
 t_complex		*c_square(t_complex *z)
 {
-	typeof(z->re)	re;
+	t_floating	re;
 
 	re = z->re;
 	z->re = z->re * z->re - z->im * z->im;

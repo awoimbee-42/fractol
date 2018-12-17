@@ -6,13 +6,13 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:50:12 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/17 19:25:19 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/17 19:40:50 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static int	pimp_colors(t_complex *z, t_complex *derr_inpc, int iter)
+static int		pimp_colors(t_complex *z, t_complex *derr_inpc, int iter)
 {
 	int			color;
 
@@ -23,7 +23,7 @@ static int	pimp_colors(t_complex *z, t_complex *derr_inpc, int iter)
 		*derr_inpc = *z;
 		(void)c_div(z, c_abs(derr_inpc));
 		z->re = z->re * 0.7071067811865475 + z->im * 0.7071067811865475 + 1.5;
-		z->re = z->re /(1 + 1.5);
+		z->re = z->re / (1 + 1.5);
 		z->re = z->re < 0 ? 0 : z->re;
 		color = 150 * z->re + 105;
 		color = color + (color << 8) + (color << 16);
@@ -37,7 +37,7 @@ static int	pimp_colors(t_complex *z, t_complex *derr_inpc, int iter)
 **	colors are : not enought iter, intside, then outside
 */
 
-static int	draw_px(t_complex z, t_complex *c, t_floating thickness, int *imgd)
+static int		draw_px(t_complex z, t_complex *c, float thickness, int *imgd)
 {
 	int			iter;
 	t_complex	derr_inec;
@@ -65,7 +65,7 @@ static int	draw_px(t_complex z, t_complex *c, t_floating thickness, int *imgd)
 	return (1);
 }
 
-static t_floating	get_thickness(int iter_m)
+static float	get_thickness(int iter_m)
 {
 	t_floating	res;
 
@@ -78,13 +78,13 @@ static t_floating	get_thickness(int iter_m)
 	return (res);
 }
 
-void		*draw_mandel(void *thread_data)
+void			*draw_mandel(void *thread_data)
 {
 	t_env		*env;
 	int			px_id;
 	t_pixel		px;
 	t_complex	z;
-	t_floating	thickness;
+	float		thickness;
 
 	env = ((t_thread*)thread_data)->env;
 	thickness = get_thickness(env->iter_max);
@@ -105,7 +105,7 @@ void		*draw_mandel(void *thread_data)
 	return (NULL);
 }
 
-void		*draw_julia(void *thread_data)
+void			*draw_julia(void *thread_data)
 {
 	t_env		*env;
 	int			px_id;

@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 17:49:02 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/17 13:17:43 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/17 19:41:26 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void		launch_threads(t_env *data)
 						(t_floating)(5 * data->zoom) / data->res.w};
 	i = -1;
 	while (++i < THREADS_NB)
-		pthread_create(&data->threads[i].thread, NULL, data->fract, &data->threads[i]);
+		pthread_create(&data->threads[i].thread, NULL,
+		data->fract, &data->threads[i]);
 	i = -1;
 	while (++i < THREADS_NB)
 		if (pthread_join(data->threads[i].thread, NULL))
