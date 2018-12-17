@@ -6,13 +6,15 @@
 #    By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/26 22:06:19 by marvin            #+#    #+#              #
-#    Updated: 2018/12/17 19:04:23 by awoimbee         ###   ########.fr        #
+#    Updated: 2018/12/17 19:44:31 by awoimbee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	fractol
 
 CC = gcc
+
+ECHO = echo -e
 
 CFLAGS	=	-Wall -Wextra -O3 #-Wall -Wextra -Werror
 
@@ -59,42 +61,42 @@ LIBS = libft/libft.a $(LIBX_FD)/libmlx.a
 all : $(NAME)
 
 libft/libft.a :
-	@echo -e "\033[0;31mMaking libft...\033[0m"
+	$(ECHO) -e "\033[0;31mMaking libft...\033[0m"
 	make -C libft/ all
 
 $(LIBX_FD)/libmlx.a :
-	@echo -e "\e[0;31mMaking libx...\033[0m"
+	$(ECHO) "\033[0;31mMaking libx...\033[0m"
 	make all -C $(LIBX_FD)
 
 
 $(NAME) : $(LIBS) $(OBJ)
-	@echo -e "\033[0;31mLinking $(NAME)...\033[0m"
+	$(ECHO) "\033[0;31mLinking $(NAME)...\033[0m"
 	$(CC) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	@echo -e "\033[0;32mMaking $@ with \"$(CFLAGS) $(CPPFLAGS)\"...\033[0m"
+	$(ECHO) "\033[0;32mMaking $@ with \"$(CFLAGS) $(CPPFLAGS)\"...\033[0m"
 	@mkdir -p $(OBJ_PATH) 2> /dev/null
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
 clean :
-	@echo -e "\033[0;31mCleaning libx...\033[0m"
+	$(ECHO) "\033[0;31mCleaning libx...\033[0m"
 	make clean -C $(LIBX_FD)
-	@echo -e "\033[0;31mCleaning libft...\033[0m"
+	$(ECHO) "\033[0;31mCleaning libft...\033[0m"
 	make fclean -C libft
-	@echo -e "\033[0;31mCleaning objects...\033[0m"
+	$(ECHO) "\033[0;31mCleaning objects...\033[0m"
 	rm -f $(OBJ)
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
 
 fclean : clean
-	@echo -e "\033[0;31mCleaning $(NAME)...\033[0m"
+	$(ECHO) "\033[0;31mCleaning $(NAME)...\033[0m"
 	rm -f $(NAME)
 
 re : fclean all
 
 sfclean :
-	@echo -e "\033[0;31mCleaning $(NAME)...\033[0m"
+	$(ECHO) "\033[0;31mCleaning $(NAME)...\033[0m"
 	rm -f $(NAME)
-	@echo -e "\033[0;31mCleaning objects...\033[0m"
+	$(ECHO) "\033[0;31mCleaning objects...\033[0m"
 	rm -f $(OBJ)
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
 

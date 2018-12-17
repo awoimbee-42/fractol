@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 22:27:15 by marvin            #+#    #+#             */
-/*   Updated: 2018/12/17 19:24:03 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/17 19:55:09 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 
 # define THREADS_NB 10
 # define OFFSCREEN_RES_FACTOR (4 * 2)
+
 typedef long double
-		t_floating;
+t_floating;
 
 # ifdef __APPLE__
 #  define MOUSE_ZOOM_IN 5
@@ -54,36 +55,35 @@ typedef long double
 #  define K_ESC 65307
 # endif
 
-
-typedef struct	s_img t_img;
-typedef struct	s_mlx t_mlx;
-typedef struct	s_pixel t_pixel;
-typedef struct	s_complex t_complex;
-typedef struct	s_complex t_c;
-typedef struct	s_res t_res;
-typedef struct	s_thread t_thread;
-typedef struct	s_env t_env;
+struct s_img;
+struct s_mlx;
+struct s_pixel;
+struct s_complex;
+struct s_complex;
+struct s_res;
+struct s_thread;
+struct s_env;
 
 typedef struct	s_img
 {
-	void		*ptr;
-	int			*px;
-	int			line_s;
-	int			bpp;
-	int			endian;
+	void			*ptr;
+	int				*px;
+	int				line_s;
+	int				bpp;
+	int				endian;
 }				t_img;
 
 typedef struct	s_mlx
 {
-	void		*ptr;
-	void		*win;
-	t_img		img;
+	void			*ptr;
+	void			*win;
+	t_img			img;
 }				t_mlx;
 
 typedef struct	s_pixel
 {
-	int			re_x;
-	int			im_y;
+	int				re_x;
+	int				im_y;
 }				t_pixel;
 
 typedef struct	s_complex
@@ -94,31 +94,30 @@ typedef struct	s_complex
 
 typedef struct	s_res
 {
-	int			w;
-	int			h;
+	int				w;
+	int				h;
 }				t_res;
-
 
 typedef struct	s_thread
 {
-	pthread_t	thread;
-	t_env		*env;
-	int			line_start;
-	int			line_end;
+	pthread_t		thread;
+	struct s_env	*env;
+	int				line_start;
+	int				line_end;
 }				t_thread;
 
 typedef struct	s_env
 {
-	t_mlx		*mlx;
-	t_res		res;
-	void		*(*fract)(void*);
-	t_complex	c;
-	t_complex	z_step;
-	int			iter_max;
-	t_floating	zoom;
-	t_complex	pos;
-	t_complex	mouse;
-	t_thread	threads[THREADS_NB];
+	t_mlx			*mlx;
+	t_res			res;
+	void			*(*fract)(void*);
+	t_complex		c;
+	t_complex		z_step;
+	int				iter_max;
+	t_floating		zoom;
+	t_complex		pos;
+	t_complex		mouse;
+	t_thread		threads[THREADS_NB];
 }				t_env;
 
 /*
