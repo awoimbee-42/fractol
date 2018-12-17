@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:39:03 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/15 01:40:02 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/17 19:26:06 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 int		usage(void)
 {
-	msg_exit("Usage : ./fractol fractal_name [-res]\n"
-		"\tfractal_name can be [slow_]mandelbrot, [slow_]julia,"
-		" cosine_mandelbrot, burningship.\n"
-		"\t-res width height: resolution of window, cannot be under 10\n"
-		"\t\t(default is 700x700)\n", 0);
+	ft_fprintf(2,
+		"<bold>Usage : ./fractol fractal_name [-res]</bold>\n"
+		"\tfractal_name can be:\n"
+		"\t\tmandelbrot, julia, basic_mandelbrot, basic_julia,\n"
+		"\t\tcos_mandelbrot, burningship.\n"
+		"\t-res width height:\n"
+		"\t\tresolution of window, cannot be under 10 (default is 700x700)\n");
+	exit(EXIT_FAILURE);
 	return (0);
 }
 
@@ -28,13 +31,13 @@ void	read_fract(void *(**fract)(void*), char *arg)
 		*fract = &draw_mandel;
 	else if (ft_strcmp(arg, "julia") == 0)
 		*fract = &draw_julia;
-	else if (ft_strcmp(arg, "slow_julia") == 0)
+	else if (ft_strcmp(arg, "basic_julia") == 0)
 		*fract = &draw_slow_julia;
-	else if (ft_strcmp(arg, "slow_mandelbrot") == 0)
+	else if (ft_strcmp(arg, "basic_mandelbrot") == 0)
 		*fract = &draw_slow_mandel;
 	else if (ft_strcmp(arg, "burningship") == 0)
 		*fract = &draw_burningship;
-	else if (ft_strcmp(arg, "cosine_mandelbrot") == 0)
+	else if (ft_strcmp(arg, "cos_mandelbrot") == 0)
 		*fract = &draw_cos_mandel;
 	else
 		usage();
@@ -62,35 +65,33 @@ void	read_args(t_env *data, char **argv, int argc)
 
 void	init(t_env *data, t_mlx *mlx)
 {
-	int		i;
-
 	chaos((mlx->ptr = mlx_init()));
-	data->res.h = 700;
-	data->res.w = 700;
+	data->res = (t_res){700, 700};
 	data->mlx = mlx;
 	data->iter_max = 50;
 	data->zoom = 1.;
-	data->pos.re = 0;
-	data->pos.im = 0;
+	data->pos = (t_complex){0, 0};
 	data->fract = 0;
-	i = -1;
-	while (++i < THREADS_NB)
-	{
-		data->threads[i].env = data;
-		data->threads[i].line_start = (i * data->res.h) / THREADS_NB;
-		data->threads[i].line_end = (((i + 1) * data->res.h) / THREADS_NB) + 1;
-	}
+	data->mouse = (t_complex){1, 0};
 }
 
 int		main(int argc, char **argv)
 {
 	t_mlx	mlx;
 	t_env	data;
+	int		i;
 
 	if (argc == 1 || argv[1][0] == '-')
 		usage();
 	init(&data, &mlx);
 	read_args(&data, argv, argc);
+	i = -1;
+	while (++i < THREADS_NB)
+	{
+		data.threads[i].env = &data;
+		data.threads[i].line_start = (i * data.res.h) / THREADS_NB;
+		data.threads[i].line_end = (((i + 1) * data.res.h) / THREADS_NB) + 1;
+	}
 	chaos((mlx.win = mlx_new_window(mlx.ptr,
 		data.res.w, data.res.h, "Give good grade plz")));
 	print_instructions();

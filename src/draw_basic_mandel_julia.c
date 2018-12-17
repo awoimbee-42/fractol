@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 19:42:59 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/16 19:36:26 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/17 16:43:42 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 	col = 0x000000;
 	while (++iter < iter_max)
 	{
-		if (c_squared_modulus(&z) > 100 && (col = red_col(iter)))
+		if (c_squared_modulus(&z) > 100 && (col = blu_col(iter)))
 			break ;
 		(void)c_sum(c_square(&z), &c);
 	}
@@ -74,7 +74,7 @@ void		*draw_slow_julia(void *thread_data)
 		{
 			z.re = (px.re_x - (env->res.w / 2.)) / env->res.w
 				* 5. * env->zoom + env->pos.re;
-			draw_px(z, ((t_thread*)thread_data)->c, env->iter_max, &i_d[pid++]);
+			draw_px(z, env->c, env->iter_max, &i_d[pid++]);
 		}
 	}
 	return (NULL);

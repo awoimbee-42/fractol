@@ -6,7 +6,7 @@
 #    By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/26 22:06:19 by marvin            #+#    #+#              #
-#    Updated: 2018/12/16 21:20:16 by awoimbee         ###   ########.fr        #
+#    Updated: 2018/12/17 19:04:23 by awoimbee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,13 @@ NAME	=	fractol
 
 CC = gcc
 
-CFLAGS	=	-Wall -Wextra #-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -O3 #-Wall -Wextra -Werror
 
 SRC_PATH =	src
 OBJ_PATH =	obj
 
-SRC_NAME =	draw_slow_mandel_julia.c	\
-			draw_mandel_julia.c			\
+SRC_NAME =	draw_basic_mandel_julia.c	\
+			draw_2.5d_mandel_julia.c	\
 			draw_burningship.c			\
 			draw_cos_mandel.c			\
 			export_bmp.c				\

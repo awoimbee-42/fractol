@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_burningship.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 20:33:39 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/15 01:40:22 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/17 14:10:20 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,18 @@
 **	derr_inpc  = (Pⁿ)'(c)
 **	colors are : not enought iter, intside, then outside
 */
-#include <stdio.h>
+
 static void	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 {
 	int			iter;
 	t_complex	derr_inec;
 	float		radius;
+	int 		col;
 
 	derr_inec.re = 1;
 	derr_inec.im = 0;
 	iter = 0;
+	col = 0;
 	while (++iter < iter_max)
 	{
 		radius = c_squared_modulus(&z);
@@ -39,7 +41,9 @@ static void	draw_px(t_complex z, t_complex c, int iter_max, int *imgd)
 		z.im = fabsl(z.im);
 		(void)c_sum(c_square(&z), &c);
 	}
-	*imgd = red_col(iter);
+	if (iter != iter_max)
+		col = red_col(iter);
+	*imgd = col;;
 }
 
 void		*draw_burningship(void *thread_data)
@@ -63,7 +67,6 @@ void		*draw_burningship(void *thread_data)
 		{
 			z.re = (px.re_x - (env->res.w / 2.)) / env->res.w
 				* 5. * env->zoom + env->pos.re;
-			//printf("%.50Lf\n", (long double)(env->pos.re) );
 			draw_px(z, z, env->iter_max, &img_data[px_id]);
 			px_id++;
 		}

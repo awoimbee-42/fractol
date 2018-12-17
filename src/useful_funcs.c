@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 17:47:40 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/03 16:24:10 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/17 19:31:21 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ void	chaos(void *fate)
 
 void	print_instructions(void)
 {
-	ft_putstr(" ------------------------------------------------------\n"
+	ft_printf(
+			" ------------------------------------------------------\n"
 			"| Use the arrow keys to move around                    |\n"
 			"| Use W & S or the scroll wheel to zoom in and out     |\n"
-			"|     (scrolling also changes the branch precision)    |\n"
+			"|     (scrolling also changes the precision)           |\n"
 			"| Use + & - to change the branch precision             |\n"
 			"|     (not on all fractals)                            |\n"
-			" -----------------------------------------------------\n");
+			" ------------------------------------------------------\n");
 }

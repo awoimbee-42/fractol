@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 18:35:10 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/16 19:14:45 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/17 16:30:51 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,11 @@ void		render(t_mlx *mlx, t_env *data)
 
 void		render_offscreen(t_env *data)
 {
-	t_res	tmp_res;
 	int		i;
 
-	write(1, "Making high quality render...\n", 30);
-	tmp_res = data->res;
-	data->res = (t_res){3840, 2160};
+	ft_printf("{ylw}Making high quality render...{eoc}\n");
+	data->res.h *= OFFSCREEN_RES_FACTOR;
+	data->res.w *= OFFSCREEN_RES_FACTOR;
 	if (!(data->mlx->img.px = malloc((data->res.w * data->res.h) * 4)))
 		msg_exit("Not enought ram!", 0);
 	i = -1;
@@ -69,12 +68,13 @@ void		render_offscreen(t_env *data)
 	launch_threads(data);
 	export_bmp(data);
 	free(data->mlx->img.px);
-	data->res = tmp_res;
+	data->res.h /= OFFSCREEN_RES_FACTOR;
+	data->res.w /= OFFSCREEN_RES_FACTOR;
 	i = -1;
 	while (++i < THREADS_NB)
 	{
 		data->threads[i].line_start = (i * data->res.h) / THREADS_NB;
 		data->threads[i].line_end = (((i + 1) * data->res.h) / THREADS_NB) + 1;
 	}
-	write(1, "Render done, check img.bmp!\n", 28);
+	ft_printf("{grn}Render done, check img.bmp!{eoc}\n");
 }

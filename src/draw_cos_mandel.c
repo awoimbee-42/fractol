@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 20:54:44 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/16 21:04:33 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/17 12:49:24 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ void		*draw_cos_mandel(void *thread_data)
 	int			px_id;
 	t_pixel		px;
 	t_complex	z;
-	t_complex	zstep;
 
 	env = ((t_thread*)thread_data)->env;
 	px.im_y = ((t_thread*)thread_data)->line_start;
 	px_id = ((t_thread*)thread_data)->line_start * env->res.w;
-	zstep = (t_c){(5. * env->zoom) / env->res.w, (5. * env->zoom) / env->res.w};
 	z.im = ((px.im_y - (env->res.w / 2.)) / env->res.w)
 	* 5. * env->zoom + env->pos.im;
 	while (++px.im_y < ((t_thread*)thread_data)->line_end && (px.re_x = -1))
@@ -57,9 +55,9 @@ void		*draw_cos_mandel(void *thread_data)
 		while (++px.re_x < env->res.w)
 		{
 			draw_px((t_c){1, 0}, z, env->iter_max, &env->mlx->img.px[px_id++]);
-			z.re += zstep.re;
+			z.re += env->z_step.re;
 		}
-		z.im += zstep.im;
+		z.im += env->z_step.im;
 	}
 	return (NULL);
 }

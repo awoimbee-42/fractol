@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
+/*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 15:38:08 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/15 01:39:10 by arthur           ###   ########.fr       */
+/*   Updated: 2018/12/17 19:27:18 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		keypress(int keycode, void *param)
 	keycode == K_R ? render_offscreen(data) : 0;
 	if (keycode == K_PLS)
 		data->iter_max += 10;
-	if (keycode == K_MNS)
+	if (keycode == K_MNS && data->iter_max > 10)
 		data->iter_max -= 10;
 	keycode == K_ESC ? exit(0) : 0;
 	render(data->mlx, data);
@@ -42,8 +42,8 @@ int		mouse_pos(int x, int y, void *param)
 	&& x > 0 && x < data->res.w
 	&& y > 0 && y < data->res.w)
 	{
-		data->mouse.im = (double)y / (double)data->res.h;
-		data->mouse.re = (double)x / (double)data->res.w;
+		data->mouse.im = (t_floating)y / data->res.h;
+		data->mouse.re = (t_floating)x / data->res.w;
 		render(data->mlx, data);
 	}
 	return (1);
@@ -66,7 +66,7 @@ int		mouse_click(int keycode, int x, int y, void *param)
 			* 1.5;
 			render(data->mlx, data);
 		}
-		else if (keycode == MOUSE_ZOOM_OUT)
+		else if (keycode == MOUSE_ZOOM_OUT && data->zoom < 1)
 		{
 			data->zoom *= 1.3;
 			data->iter_max -= 1;

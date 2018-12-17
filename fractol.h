@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 22:27:15 by marvin            #+#    #+#             */
-/*   Updated: 2018/12/16 20:06:50 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/17 19:24:03 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@
 # include <math.h>
 # include <pthread.h>
 
-# define THREADS_NB 20
+# define THREADS_NB 10
+# define OFFSCREEN_RES_FACTOR (4 * 2)
+typedef long double
+		t_floating;
 
 # ifdef __APPLE__
 #  define MOUSE_ZOOM_IN 5
@@ -51,6 +54,7 @@
 #  define K_ESC 65307
 # endif
 
+
 typedef struct	s_img t_img;
 typedef struct	s_mlx t_mlx;
 typedef struct	s_pixel t_pixel;
@@ -59,7 +63,6 @@ typedef struct	s_complex t_c;
 typedef struct	s_res t_res;
 typedef struct	s_thread t_thread;
 typedef struct	s_env t_env;
-
 
 typedef struct	s_img
 {
@@ -85,8 +88,8 @@ typedef struct	s_pixel
 
 typedef struct	s_complex
 {
-	long double		re; //WHY ?
-	long double		im;
+	t_floating		re;
+	t_floating		im;
 }				t_complex;
 
 typedef struct	s_res
@@ -102,7 +105,6 @@ typedef struct	s_thread
 	t_env		*env;
 	int			line_start;
 	int			line_end;
-	t_complex	c;
 }				t_thread;
 
 typedef struct	s_env
@@ -110,8 +112,10 @@ typedef struct	s_env
 	t_mlx		*mlx;
 	t_res		res;
 	void		*(*fract)(void*);
+	t_complex	c;
+	t_complex	z_step;
 	int			iter_max;
-	long double	zoom;
+	t_floating	zoom;
 	t_complex	pos;
 	t_complex	mouse;
 	t_thread	threads[THREADS_NB];
@@ -130,6 +134,7 @@ void			render(t_mlx *mlx, t_env *data);
 void			render_offscreen(t_env *data);
 void			launch_threads(t_env *data);
 void			export_bmp(t_env *data);
+
 int				red_col(int iter);
 int				blu_col(int iter);
 
@@ -155,6 +160,7 @@ t_complex		*c_div(t_complex *c, t_complex *divi);
 t_complex		*c_sub(t_complex *z, t_complex *sub);
 t_complex		*c_opsite(t_complex *c);
 t_complex		*c_swap(t_complex *c1, t_complex *c2);
+t_complex		*c_abs(t_complex *c);
 
 /*
 **	Mlx hooks
