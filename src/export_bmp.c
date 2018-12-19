@@ -13,6 +13,11 @@
 #include "fractol.h"
 #include <stdio.h>
 
+/*
+**	To better understand the code,
+**		please look at the BMP file format specifications and headers
+*/
+
 void	export_bmp(t_env *data)
 {
 	FILE			*f;

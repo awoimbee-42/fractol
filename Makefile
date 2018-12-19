@@ -14,7 +14,7 @@ NAME	=	fractol
 
 CC = gcc
 
-ECHO = printf
+ECHO = @printf
 
 CFLAGS	=	-Wall -Wextra -O3 #-Wall -Wextra -Werror
 
@@ -61,43 +61,47 @@ LIBS = libft/libft.a $(LIBX_FD)/libmlx.a
 all : $(NAME)
 
 libft/libft.a :
-	$(ECHO) "\033[0;31mMaking libft...\033[0m\n"
+	$(ECHO) "$(RED)Making libft...$(EOC)\n"
 	make -C libft/ all
 
 $(LIBX_FD)/libmlx.a :
-	$(ECHO) "\033[0;31mMaking libx...\033[0m\n"
+	$(ECHO) "$(RED)Making libx...$(EOC)\n"
 	make all -C $(LIBX_FD)
 
 
 $(NAME) : $(LIBS) $(OBJ)
-	$(ECHO) "\033[0;31mLinking $(NAME)...\033[0m\n"
+	$(ECHO) "$(RED)Linking $(NAME)...$(EOC)\n"
 	$(CC) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	$(ECHO) "\033[0;32mMaking $@ with \"$(CFLAGS) $(CPPFLAGS)\"...\033[0m\n"
+	$(ECHO) "$(GRN)Making $@ with \"$(CFLAGS) $(CPPFLAGS)\"...$(EOC)\n"
 	@mkdir -p $(OBJ_PATH) 2> /dev/null
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
 clean :
-	$(ECHO) "\033[0;31mCleaning libx...\033[0m\n"
+	$(ECHO) "$(RED)Cleaning libx...$(EOC)\n"
 	make clean -C $(LIBX_FD)
-	$(ECHO) "\033[0;31mCleaning libft...\033[0m\n"
+	$(ECHO) "$(RED)Cleaning libft...$(EOC)\n"
 	make fclean -C libft
-	$(ECHO) "\033[0;31mCleaning objects...\033[0m\n"
+	$(ECHO) "$(RED)Cleaning objects...$(EOC)\n"
 	rm -f $(OBJ)
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
 
 fclean : clean
-	$(ECHO) "\033[0;31mCleaning $(NAME)...\033[0m\n"
+	$(ECHO) "$(RED)Cleaning $(NAME)...$(EOC)\n"
 	rm -f $(NAME)
 
 re : fclean all
 
 sfclean :
-	$(ECHO) "\033[0;31mCleaning $(NAME)...\033[0m\n"
+	$(ECHO) "$(RED)Cleaning $(NAME)...$(EOC)\n"
 	rm -f $(NAME)
-	$(ECHO) "\033[0;31mCleaning objects...\033[0m\n"
+	$(ECHO) "$(RED)Cleaning objects...$(EOC)\n"
 	rm -f $(OBJ)
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
 
 sre: sfclean $(NAME)
+
+RED = \033[1;31m
+GRN = \033[1;32m
+EOC = \033[0m

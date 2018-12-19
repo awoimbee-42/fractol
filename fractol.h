@@ -21,8 +21,25 @@
 # include <math.h>
 # include <pthread.h>
 
+/*
+**	THREAD_NB :
+**		The nb of threads that will be used for rendering
+**		Spawning more threads than the CPU can handle can have a positive impact
+**		Surprisingly you can put a big number in there.
+**	OFFSCREEN_RES_FACTOR :
+**		When rendering offscreen, the resolution is set at
+**			(...).res * OFFSCREEN_RES_FACTOR.
+**		This value should be divisible by 2 to avoid glitches.
+**	t_floating :
+**		The type of most of the floating point numbers in the programm
+**		Should be set according to your CPU :
+**			-On x86 : float is preferred
+**			-On pre 2014 x86_64 : double is preffered but float is faster
+**			-On post 2014 x86_64 : long double is preffered, float is faster
+*/
+
 # define THREADS_NB 10
-# define OFFSCREEN_RES_FACTOR (4 * 2)
+# define OFFSCREEN_RES_FACTOR (8)
 
 typedef long double
 t_floating;
@@ -91,6 +108,9 @@ typedef struct	s_complex
 	t_floating		re;
 	t_floating		im;
 }				t_complex;
+
+typedef t_complex
+t_c;
 
 typedef struct	s_res
 {

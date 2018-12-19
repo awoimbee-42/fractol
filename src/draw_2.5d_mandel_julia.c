@@ -12,6 +12,10 @@
 
 #include "fractol.h"
 
+/*
+**	Default mandelbrot & julia representation
+*/
+
 static int		pimp_colors(t_complex *z, t_complex *derr_inpc, int iter)
 {
 	int			color;
