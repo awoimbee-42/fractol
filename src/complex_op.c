@@ -12,13 +12,7 @@
 
 #include "fractol.h"
 
-void			c_fill(t_complex *c, float re, float im)
-{
-	c->re = re;
-	c->im = im;
-}
-
-double			c_squared_modulus(t_complex *z)
+float			c_squared_modulus(t_complex *z)
 {
 	return (z->re * z->re + z->im * z->im);
 }

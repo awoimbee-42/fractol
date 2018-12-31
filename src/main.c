@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:39:03 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/17 19:26:06 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/31 04:22:34 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		usage(void)
 		"<bold>Usage : ./fractol fractal_name [-res]</bold>\n"
 		"\tfractal_name can be:\n"
 		"\t\tmandelbrot, julia, basic_mandelbrot, basic_julia,\n"
-		"\t\tcos_mandelbrot, burningship.\n"
+		"\t\tcos_mandelbrot, burningship, koch.\n"
 		"\t-res width height:\n"
 		"\t\tresolution of window, cannot be under 10 (default is 700x700)\n");
 	exit(EXIT_FAILURE);
@@ -39,6 +39,8 @@ void	read_fract(void *(**fract)(void*), char *arg)
 		*fract = &draw_burningship;
 	else if (ft_strcmp(arg, "cos_mandelbrot") == 0)
 		*fract = &draw_cos_mandel;
+	else if (ft_strcmp(arg, "koch") == 0)
+		*fract = &draw_koch;
 	else
 		usage();
 }

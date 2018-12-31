@@ -6,7 +6,7 @@
 #    By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/26 22:06:19 by marvin            #+#    #+#              #
-#    Updated: 2018/12/17 19:44:31 by awoimbee         ###   ########.fr        #
+#    Updated: 2018/12/31 04:20:47 by awoimbee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = gcc
 
 ECHO = @printf
 
-CFLAGS	=	-Wall -Wextra -O3 #-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -g3 #-Wall -Wextra -Werror
 
 SRC_PATH =	src
 OBJ_PATH =	obj
@@ -25,6 +25,7 @@ SRC_NAME =	draw_basic_mandel_julia.c	\
 			draw_2.5d_mandel_julia.c	\
 			draw_burningship.c			\
 			draw_cos_mandel.c			\
+			draw_kochsnow.c				\
 			export_bmp.c				\
 			main.c						\
 			mlx_hooks.c					\

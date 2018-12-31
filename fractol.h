@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 22:27:15 by marvin            #+#    #+#             */
-/*   Updated: 2018/12/17 19:55:09 by awoimbee         ###   ########.fr       */
+/*   Updated: 2018/12/31 04:11:49 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 **		The type of most of the floating point numbers in the programm
 **		Should be set according to your CPU :
 **			-On x86 : float is preferred
-**			-On pre 2014 x86_64 : double is preffered but float is faster
-**			-On post 2014 x86_64 : long double is preffered, float is faster
+**			-On pre 2014 x86_64 : double is preferred but float is faster
+**			-On post 2014 x86_64 : long double is preferred, float is faster
 */
 
 # define THREADS_NB 10
@@ -163,13 +163,12 @@ void			*draw_slow_mandel(void *thread_data);
 void			*draw_slow_julia(void *thread_data);
 void			*draw_burningship(void *thread_data);
 void			*draw_cos_mandel(void *thread_data);
+void			*draw_koch(void *data);
 
 /*
 **	Operations on t_complex type
 */
-void			c_fill_complex(t_complex *c, float re, float im);
-double			c_squared_modulus(t_complex *z);
-int				c_squared_mod_inf(t_complex *z, double threshhold);
+float			c_squared_modulus(t_complex *z);
 t_complex		*c_sum(t_complex *z, t_complex *add);
 t_complex		*c_mult(t_complex *z, t_complex *mult);
 t_complex		*c_square(t_complex *z);
