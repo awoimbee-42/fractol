@@ -16,7 +16,7 @@ CC = gcc
 
 ECHO = @printf
 
-CFLAGS	=	-Wall -Wextra -g3 #-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror
 
 SRC_PATH =	src
 OBJ_PATH =	obj

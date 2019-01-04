@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 15:38:08 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/17 19:27:18 by awoimbee         ###   ########.fr       */
+/*   Updated: 2019/01/02 22:15:43 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		keypress(int keycode, void *param)
 		data->iter_max += 10;
 	if (keycode == K_MNS && data->iter_max > 10)
 		data->iter_max -= 10;
-	keycode == K_ESC ? exit(0) : 0;
+	keycode == K_ESC ? exit(EXIT_SUCCESS) : 0;
 	render(data->mlx, data);
 	return (1);
 }
