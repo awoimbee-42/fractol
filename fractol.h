@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 22:27:15 by marvin            #+#    #+#             */
-/*   Updated: 2018/12/31 04:11:49 by awoimbee         ###   ########.fr       */
+/*   Updated: 2019/01/05 14:31:31 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,7 @@ typedef struct	s_complex
 	t_floating		im;
 }				t_complex;
 
-typedef t_complex
-t_c;
+typedef t_complex	t_c;
 
 typedef struct	s_res
 {

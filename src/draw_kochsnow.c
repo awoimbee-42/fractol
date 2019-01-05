@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 17:57:01 by awoimbee          #+#    #+#             */
-/*   Updated: 2019/01/02 23:04:48 by awoimbee         ###   ########.fr       */
+/*   Updated: 2019/01/05 14:35:27 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	draw_line_higrad(t_pixel p0, t_pixel p1, int *img, int win_w)
 {
-	t_pixel	delta;
+	t_pixel		delta;
 	int			way_x;
 	int			error;
 
@@ -39,7 +39,7 @@ static void	draw_line_higrad(t_pixel p0, t_pixel p1, int *img, int win_w)
 
 static void	draw_line_lograd(t_pixel p0, t_pixel p1, int *img, int win_w)
 {
-	t_pixel	delta;
+	t_pixel		delta;
 	int			way_y;
 	int			error;
 
@@ -80,13 +80,14 @@ static void	draw_line(t_pixel p0, t_pixel p1, int *img, int win_w)
 	}
 }
 
-void kochCurve(t_complex p1,t_complex p2,int times, t_env *env){
-	t_complex 	p3;
+void		compute_koch(t_complex p1, t_complex p2, int times, t_env *env)
+{
+	t_complex	p3;
 	t_complex	p4;
 	t_complex	p5;
 	double		theta;
 
-	theta = 3.14159265358979323846 / 3.; 
+	theta = 3.14159265358979323846 / 3.;
 	if (times > 0)
 	{
 		p3 = (t_complex){(2 * p1.re + p2.re) / 3, (2 * p1.im + p2.im) / 3};
@@ -95,12 +96,12 @@ void kochCurve(t_complex p1,t_complex p2,int times, t_env *env){
 			p3.re + (p5.re - p3.re) * cos(theta) + (p5.im - p3.im) * sin(theta),
 			p3.im - (p5.re - p3.re) * sin(theta) + (p5.im - p3.im) * cos(theta)
 		};
-		kochCurve(p1, p3, times-1, env);
-		kochCurve(p3, p4, times-1, env);
-		kochCurve(p4, p5, times-1, env);
-		kochCurve(p5, p2, times-1, env);
+		compute_koch(p1, p3, times - 1, env);
+		compute_koch(p3, p4, times - 1, env);
+		compute_koch(p4, p5, times - 1, env);
+		compute_koch(p5, p2, times - 1, env);
 	}
-	else if ((int)p1.re > -1 && (int)p1.re < env->res.w  - 1
+	else if ((int)p1.re > -1 && (int)p1.re < env->res.w - 1
 			&& (int)p2.re > -1 && (int)p2.re < env->res.w - 1
 			&& (int)p1.im > -1 && (int)p1.im < env->res.h - 1
 			&& (int)p2.im > -1 && (int)p2.im < env->res.h - 1)
@@ -116,9 +117,9 @@ void		*draw_koch(void *data)
 
 	env = data;
 	p_start = (t_c){-env->pos.re * 3,
-	((env->res.h / 2.)  - env->pos.im * 3)};
+	((env->res.h / 2.) - env->pos.im * 3)};
 	p_end = (t_c){(env->res.w) / env->zoom - env->pos.re * 3,
 	(env->res.h / 2.) - env->pos.im * 3};
-	kochCurve(p_start, p_end, env->iter_max / 10, env);
+	compute_koch(p_start, p_end, env->iter_max / 10, env);
 	return (NULL);
 }

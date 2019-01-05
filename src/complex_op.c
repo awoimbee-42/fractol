@@ -6,31 +6,26 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:42:31 by awoimbee          #+#    #+#             */
-/*   Updated: 2018/12/17 19:37:11 by awoimbee         ###   ########.fr       */
+/*   Updated: 2019/01/05 14:44:30 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-float			c_squared_modulus(t_complex *z)
+t_complex		*c_sum(t_complex *z, t_complex *c)
 {
-	return (z->re * z->re + z->im * z->im);
-}
-
-t_complex		*c_sum(t_complex *z, t_complex *add)
-{
-	z->re += add->re;
-	z->im += add->im;
+	z->re += c->re;
+	z->im += c->im;
 	return (z);
 }
 
-t_complex		*c_mult(t_complex *z, t_complex *mult)
+t_complex		*c_mult(t_complex *z, t_complex *c)
 {
 	t_floating	re;
 
 	re = z->re;
-	z->re = z->re * mult->re - z->im * mult->im;
-	z->im = z->im * mult->re + re * mult->im;
+	z->re = z->re * c->re - z->im * c->im;
+	z->im = z->im * c->re + re * c->im;
 	return (z);
 }
 
@@ -40,6 +35,6 @@ t_complex		*c_square(t_complex *z)
 
 	re = z->re;
 	z->re = z->re * z->re - z->im * z->im;
-	z->im = z->im * re * 2;
+	z->im = (z->im * re) * 2;
 	return (z);
 }

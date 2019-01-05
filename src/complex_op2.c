@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 00:17:55 by arthur            #+#    #+#             */
-/*   Updated: 2018/12/17 19:38:34 by awoimbee         ###   ########.fr       */
+/*   Updated: 2019/01/05 14:44:38 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,12 @@ t_complex		*c_swap(t_complex *c1, t_complex *c2)
 
 t_complex		*c_abs(t_complex *c)
 {
-	c->re = fabs(c->re);
-	c->im = fabs(c->im);
+	c->re = fabs((double)c->re);
+	c->im = fabs((double)c->im);
 	return (c);
+}
+
+float			c_squared_modulus(t_complex *z)
+{
+	return ((float)(z->re * z->re + z->im * z->im));
 }
