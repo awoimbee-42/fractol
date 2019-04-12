@@ -1,9 +1,9 @@
 ##
 ## Makefile for MiniLibX in /home/boulon/work/c/raytraceur/minilibx
-## 
+##
 ## Made by Olivier Crouzet
 ## Login   <ol@epitech.net>
-## 
+##
 ## Started on  Tue Oct  5 15:56:43 2004 Olivier Crouzet
 ## Last update Tue May 15 15:41:20 2007 Olivier Crouzet
 ##
@@ -31,7 +31,7 @@ SRC	= mlx_init.c mlx_new_window.c mlx_pixel_put.c mlx_loop.c \
 	mlx_rgb.c mlx_destroy_image.c
 
 OBJ	=$(SRC:.c=.o)
-CFLAGS	= -O3 -I$(INC)
+CFLAGS	= -O3 -I$(INC) -w
 
 all	: $(NAME) $(DOCP)
 

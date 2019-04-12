@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 22:27:15 by marvin            #+#    #+#             */
-/*   Updated: 2019/01/05 14:31:31 by awoimbee         ###   ########.fr       */
+/*   Updated: 2019/04/12 02:24:41 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define THREADS_NB 10
 # define OFFSCREEN_RES_FACTOR (8)
 
-typedef long double
+typedef double
 t_floating;
 
 # ifdef __APPLE__
@@ -143,7 +143,6 @@ typedef struct	s_env
 **	Error handling
 */
 void			chaos(void *fate);
-void			msg_exit(char *msg, void *data);
 
 /*
 **	rendering
@@ -185,6 +184,8 @@ t_complex		*c_abs(t_complex *c);
 int				mouse_pos(int x, int y, void *param);
 int				mouse_click(int x, int y, int keycode, void *param);
 int				keypress(int keycode, void *param);
+int				loop(void *d);
+int				set_close(void *d);
 
 void			print_instructions(void);
 

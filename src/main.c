@@ -6,7 +6,7 @@
 /*   By: awoimbee <awoimbee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:39:03 by awoimbee          #+#    #+#             */
-/*   Updated: 2019/01/05 14:47:18 by awoimbee         ###   ########.fr       */
+/*   Updated: 2019/04/12 02:30:34 by awoimbee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int		main(int argc, char **argv)
 	mlx_mouse_hook(mlx.win, &mouse_click, &data);
 	mlx_hook(mlx.win, 2, 1L << 0, &keypress, &data);
 	mlx_hook(mlx.win, 6, 1L << 6, &mouse_pos, &data);
+	mlx_hook(mlx.win, 17, 0, set_close, &data);
+	mlx_loop_hook(mlx.ptr, loop, &data);
 	render(&mlx, &data);
 	mlx_loop(mlx.ptr);
 }
