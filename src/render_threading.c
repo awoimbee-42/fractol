@@ -32,5 +32,5 @@ void		launch_threads(t_env *data)
 	i = -1;
 	while (++i < THREADS_NB)
 		if (pthread_join(data->threads[i].thread, NULL))
-			msg_exit("Could not join thread nb %d.", &i);
+			ft_msg_exit("Could not join thread nb %d.", &i);
 }

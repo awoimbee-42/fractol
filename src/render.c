@@ -58,7 +58,7 @@ void		render_offscreen(t_env *data)
 	data->res.h *= OFFSCREEN_RES_FACTOR;
 	data->res.w *= OFFSCREEN_RES_FACTOR;
 	if (!(data->mlx->img.px = malloc((data->res.w * data->res.h) * 4)))
-		msg_exit("Not enought ram!", 0);
+		ft_msg_exit("Not enought ram!", 0);
 	i = -1;
 	while (++i < THREADS_NB)
 	{

@@ -56,9 +56,9 @@ void	read_args(t_env *data, char **argv, int argc)
 		if (ft_strcmp(argv[i], "-res") == 0 && i + 2 < argc)
 		{
 			(data->res.w = ft_atoi(argv[++i])) < 10 ?
-			msg_exit("Window width too small ! (%dpx)", &data->res.w) : 0;
+			ft_msg_exit("Window width too small ! (%dpx)", &data->res.w) : 0;
 			(data->res.h = ft_atoi(argv[++i])) < 10 ?
-			msg_exit("Window height too small ! (%dpx)", &data->res.h) : 0;
+			ft_msg_exit("Window height too small ! (%dpx)", &data->res.h) : 0;
 		}
 		else
 			usage();

@@ -12,7 +12,7 @@
 
 NAME	=	fractol
 
-CC = gcc
+CC = gcc -std=gnu11
 
 ECHO = @printf
 

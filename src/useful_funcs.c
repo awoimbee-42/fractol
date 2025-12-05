@@ -15,7 +15,7 @@
 void	chaos(void *fate)
 {
 	if (fate == NULL)
-		msg_exit("Doom is uppon us.\n(Could not create window)", 0);
+		ft_msg_exit("Doom is uppon us.\n(Could not create window)", 0);
 }
 
 void	print_instructions(void)
